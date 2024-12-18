@@ -8,7 +8,7 @@ export default function createReceipt(args: InitializeArgs): Receipt {
   const compare = (i: number, j: number) => {
     commands.push({
       type: "compare",
-      message: `compare item ${i} and ${j}`,
+      message: `Assert if ${draft[i]} > ${draft[j]} (arr[${i}] > arr[${j}])`,
       payload: {
         indexA: i,
         indexB: j,
@@ -23,7 +23,7 @@ export default function createReceipt(args: InitializeArgs): Receipt {
     draft[j] = temp;
     commands.push({
       type: "swap",
-      message: `swap item ${i} and ${j}`,
+      message: `Swap item ${i} and ${j}`,
       payload: {
         indexA: i,
         indexB: j,
