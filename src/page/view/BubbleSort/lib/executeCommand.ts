@@ -12,6 +12,8 @@ export default function executeCommand(state: State, command: Command): State {
         draft.array[b] = temp;
       })(state);
     }
+    case "compare":
+      return state;
     default:
       throw new Error("Unimplented");
   }

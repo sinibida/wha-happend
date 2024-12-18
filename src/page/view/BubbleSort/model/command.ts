@@ -1,9 +1,19 @@
-export type Command = SwapCommand;
+export type Command = SwapCommand | CompareCommand;
 
 export type SwapCommand = {
-  type: 'swap',
+  type: "swap";
+  message: string;
   payload: {
-    indexA: number,
-    indexB: number,
-  }
-}
+    indexA: number;
+    indexB: number;
+  };
+};
+
+export type CompareCommand = {
+  type: "compare";
+  message: string;
+  payload: {
+    indexA: number;
+    indexB: number;
+  };
+};
