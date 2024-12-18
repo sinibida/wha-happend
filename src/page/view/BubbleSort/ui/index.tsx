@@ -8,7 +8,7 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-import useIndexing from "../lib/useIndexing";
+import useIndexing from "../indexing/useIndexing";
 import Cell from "./Cell";
 
 export default function BubbleSortPage() {
