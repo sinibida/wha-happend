@@ -6,10 +6,13 @@ import {
   Container,
   Divider,
   Paper,
+  SxProps,
+  Theme,
   Typography,
 } from "@mui/material";
 import useIndexing from "../indexing/useIndexing";
 import Cell from "./Cell";
+import { useMemo } from "react";
 
 export default function BubbleSortPage() {
   const { lastCommand, state, step, stepTo } = useIndexing();
@@ -21,14 +24,30 @@ export default function BubbleSortPage() {
     stepTo(step + 1);
   };
 
+  // STUB might use some arrows or something
+  const sxMap: Record<number, SxProps<Theme>> = {
+    ...(lastCommand?.type !== 'swap' ? {} : {
+      [lastCommand.payload.indexA]: {
+        backgroundColor: 'primary.main',
+        color: 'primary.contrastText',
+      },
+      [lastCommand.payload.indexB]: {
+        backgroundColor: 'primary.main',
+        color: 'primary.contrastText',
+      },
+    })
+  }
+
   return (
     <Container maxWidth="lg">
       <Typography variant="h3">Bubble Sort</Typography>
 
       <Box>
         <Paper variant="outlined" sx={{ gap: 1, p: 2, display: "flex" }}>
-          {state.array.map((x) => (
-            <Cell key={x}>{x}</Cell>
+          {state.array.map((x, i) => (
+            <Cell key={x} sx={sxMap[i]}>
+              {x}
+            </Cell>
           ))}
         </Paper>
 

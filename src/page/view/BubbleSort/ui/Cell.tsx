@@ -1,7 +1,13 @@
-import { Paper } from "@mui/material";
+import { Paper, SxProps, Theme } from "@mui/material";
 import React from "react";
 
-export default function Cell({ children }: { children?: React.ReactNode }) {
+export default function Cell({
+  children,
+  sx,
+}: {
+  children?: React.ReactNode;
+  sx?: SxProps<Theme>;
+}) {
   return (
     <Paper
       sx={{
@@ -10,6 +16,7 @@ export default function Cell({ children }: { children?: React.ReactNode }) {
         alignItems: "center",
         justifyContent: "center",
         display: "flex",
+        ...sx,
       }}
     >
       {children}
