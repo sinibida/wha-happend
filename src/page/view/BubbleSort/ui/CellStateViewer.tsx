@@ -38,7 +38,7 @@ export default function CellStateViewer({
   return (
     <Box sx={{ gap: 1, display: "flex", flexWrap: "wrap" }}>
       {state.array.map((x, i) => (
-        <Cell key={i} sx={sxMap[i]} elevation={elevationMap[i]}>
+        <Cell key={i} sx={sxMap[i]} elevation={elevationMap[i]} idx={i}>
           {x}
         </Cell>
       ))}
