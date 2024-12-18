@@ -14,7 +14,7 @@ import useIndexing from "../indexing/useIndexing";
 import Cell from "./Cell";
 
 export default function BubbleSortPage() {
-  const { lastCommand, state, step, goto } = useIndexing();
+  const { lastCommand, state, step, maxStep, goto } = useIndexing();
 
   const onPrevClick = () => {
     goto(step - 1);
@@ -22,8 +22,9 @@ export default function BubbleSortPage() {
   const onNextClick = () => {
     goto(step + 1);
   };
+  const isPrevEnabled = step > 0;
+  const isNextEnabled = step < maxStep;
 
-  // STUB might use some arrows or something
   const sxMap: Record<number, SxProps<Theme>> = {
     ...(lastCommand?.type !== "swap"
       ? {}
@@ -54,20 +55,20 @@ export default function BubbleSortPage() {
 
         <Box sx={{ gap: 1, p: 2 }}>
           <Typography>{JSON.stringify(lastCommand)}</Typography>
-          <Typography>step: {step}/100</Typography>
+          <Typography>step: {step}/{maxStep}</Typography>
         </Box>
       </Box>
 
       <Box sx={{ gap: 1, p: 2 }}>
-        <Button onClick={onPrevClick}>Prev</Button>
-        <Button onClick={onNextClick}>Next</Button>
+        <Button disabled={!isPrevEnabled} onClick={onPrevClick}>Prev</Button>
+        <Button disabled={!isNextEnabled} onClick={onNextClick}>Next</Button>
       </Box>
 
       <Divider />
 
       <Box sx={{ gap: 1, p: 2 }}>
         <Typography variant="h3">Bubble Sort</Typography>
-        <Typography variant="body1">It's good.</Typography>
+        <Typography variant="body1">It&apos;s good.</Typography>
       </Box>
     </Container>
   );
