@@ -12,31 +12,32 @@ import {
 } from "@mui/material";
 import useIndexing from "../indexing/useIndexing";
 import Cell from "./Cell";
-import { useMemo } from "react";
 
 export default function BubbleSortPage() {
-  const { lastCommand, state, step, stepTo } = useIndexing();
+  const { lastCommand, state, step, goto } = useIndexing();
 
   const onPrevClick = () => {
-    stepTo(step - 1);
+    goto(step - 1);
   };
   const onNextClick = () => {
-    stepTo(step + 1);
+    goto(step + 1);
   };
 
   // STUB might use some arrows or something
   const sxMap: Record<number, SxProps<Theme>> = {
-    ...(lastCommand?.type !== 'swap' ? {} : {
-      [lastCommand.payload.indexA]: {
-        backgroundColor: 'primary.main',
-        color: 'primary.contrastText',
-      },
-      [lastCommand.payload.indexB]: {
-        backgroundColor: 'primary.main',
-        color: 'primary.contrastText',
-      },
-    })
-  }
+    ...(lastCommand?.type !== "swap"
+      ? {}
+      : {
+          [lastCommand.payload.indexA]: {
+            backgroundColor: "primary.main",
+            color: "primary.contrastText",
+          },
+          [lastCommand.payload.indexB]: {
+            backgroundColor: "primary.main",
+            color: "primary.contrastText",
+          },
+        }),
+  };
 
   return (
     <Container maxWidth="lg">

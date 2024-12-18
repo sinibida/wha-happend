@@ -9,26 +9,19 @@ type Data = {
 };
 
 type Action = {
-  stepTo(newStep: number): void;
+  goto(newStep: number): void;
 };
 
 export type useIndexingReturn = Data & Action;
 
 export default function useIndexing(): useIndexingReturn {
-  const { state, receipt, step, next, prev } = useEnvironmentStore();
+  const { state, receipt, step, goto } = useEnvironmentStore();
   const lastCommand = step === 0 ? undefined : receipt.commands[step - 1];
-
-  const stepTo = (newStep: number) => {
-    // STUB
-    if (newStep === step + 1) next();
-    else if (newStep === step - 1) prev();
-    else throw new Error("Unimplemented");
-  };
 
   return {
     state,
     lastCommand,
     step,
-    stepTo,
+    goto,
   };
 }
