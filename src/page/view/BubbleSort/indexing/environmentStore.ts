@@ -28,6 +28,7 @@ const dataSlice: StateCreator<EnvironmentStore, [], [], EnvironmentData> = () =>
 export type EnvironmentAction = {
   initialize: (receipt: Receipt) => void;
   next: () => void;
+  prev: () => void;
 };
 const actionSlice: StateCreator<EnvironmentStore, [], [], EnvironmentAction> = (
   set
@@ -43,7 +44,10 @@ const actionSlice: StateCreator<EnvironmentStore, [], [], EnvironmentAction> = (
   },
   prev: () => {
     set((state) => ({
-      state: unexecuteCommand(state.state, state.receipt.commands[state.step]),
+      state: unexecuteCommand(
+        state.state,
+        state.receipt.commands[state.step - 1]
+      ),
       step: state.step - 1,
     }));
   },
