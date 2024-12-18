@@ -1,7 +1,8 @@
 import { create, StateCreator } from "zustand";
-import { Command, Receipt, State } from "../model";
-import { produce } from "immer";
+import { Receipt, State } from "../model/types";
 import { stubData } from "./_test";
+import executeCommand from "../lib/executeCommand";
+import unexecuteCommand from "../lib/unexecuteCommand";
 
 export type EnvironmentData = {
   receipt: Receipt;
@@ -24,21 +25,6 @@ const defaultData = stubData;
 const dataSlice: StateCreator<EnvironmentStore, [], [], EnvironmentData> = () =>
   defaultData;
 
-function executeCommand(state: State, command: Command): State {
-  switch (command.type) {
-    case "swap": {
-      const { indexA: a, indexB: b } = command.payload;
-      return produce<State>((draft) => {
-        const temp = draft.array[a];
-        draft.array[a] = draft.array[b];
-        draft.array[b] = temp;
-      })(state);
-    }
-    default:
-      throw new Error("Unimplented");
-  }
-}
-
 export type EnvironmentAction = {
   initialize: (receipt: Receipt) => void;
   next: () => void;
@@ -53,6 +39,12 @@ const actionSlice: StateCreator<EnvironmentStore, [], [], EnvironmentAction> = (
     set((state) => ({
       state: executeCommand(state.state, state.receipt.commands[state.step]),
       step: state.step + 1,
+    }));
+  },
+  prev: () => {
+    set((state) => ({
+      state: unexecuteCommand(state.state, state.receipt.commands[state.step]),
+      step: state.step - 1,
     }));
   },
 });

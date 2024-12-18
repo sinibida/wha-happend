@@ -1,4 +1,4 @@
-import { Receipt } from "../model";
+import { Receipt } from "../model/types";
 import { EnvironmentData } from "./environmentStore";
 
 // STUB

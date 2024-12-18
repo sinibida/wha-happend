@@ -1,4 +1,5 @@
-import { Command, State } from "../model";
+import { State } from "../model/types";
+import { Command } from "../model/command";
 import { useEnvironmentStore } from "./environmentStore";
 
 type Data = {
