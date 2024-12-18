@@ -1,8 +1,9 @@
 import { Command, State } from "../model";
+import { EnvironmentStore } from "../model/environmentStore";
 
 type Data = {
   state: State;
-  lastCommand: Command;
+  lastCommand?: Command;
   step: number;
 };
 
@@ -12,10 +13,34 @@ type Action = {
 
 export type useIndexingReturn = Data & Action;
 
+function stepStoreTo(store: EnvironmentStore, step: number): Data {
+  console.log("TODO: stepStoreTo", step);
+  return {
+    state: store.state,
+    lastCommand: undefined,
+    step,
+  };
+}
+
 // STUB
 export default function useIndexing(): useIndexingReturn {
-  const stepTo = () => {
-    console.log('TODO: stepTo')
+  const stepTo = (step: number) => {
+    // TODO setState
+    stepStoreTo(
+      {
+        receipt: {
+          commands: [],
+          initialState: {
+            array: [],
+          },
+        },
+        state: {
+          array: [],
+        },
+        step: 0,
+      },
+      step
+    );
   };
 
   return {

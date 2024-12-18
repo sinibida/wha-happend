@@ -15,10 +15,10 @@ export default function BubbleSortPage() {
   const { lastCommand, state, step, stepTo } = useIndexing();
 
   const onPrevClick = () => {
-    console.log("TODO: onPrevClick");
+    stepTo(step - 1);
   };
   const onNextClick = () => {
-    console.log("TODO: onNextClick");
+    stepTo(step + 1);
   };
 
   return (
