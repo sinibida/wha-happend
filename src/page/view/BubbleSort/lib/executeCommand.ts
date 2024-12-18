@@ -13,6 +13,7 @@ export default function executeCommand(state: State, command: Command): State {
       })(state);
     }
     case "compare":
+    case "done":
       return state;
     default:
       throw new Error("Unimplented");

@@ -33,11 +33,17 @@ export default function createReceipt(args: InitializeArgs): Receipt {
 
   for (let i = 0; i < draft.length - 1; i++) {
     for (let j = 0; j < draft.length - 1 - i; j++) {
-      if (compare(j, j+1) > 0) {
+      if (compare(j, j + 1) > 0) {
         swap(j, j + 1);
       }
     }
   }
+
+  commands.push({
+    type: "done",
+    message: "DONE!",
+    payload: {},
+  });
 
   return {
     commands,

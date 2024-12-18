@@ -1,4 +1,4 @@
-export type Command = SwapCommand | CompareCommand;
+export type Command = SwapCommand | CompareCommand | DoneCommand;
 
 export type SwapCommand = {
   type: "swap";
@@ -16,4 +16,10 @@ export type CompareCommand = {
     indexA: number;
     indexB: number;
   };
+};
+
+export type DoneCommand = {
+  type: "done";
+  message: string;
+  payload: object;
 };
