@@ -21,6 +21,9 @@ const prevRaw = (state: EnvironmentData) => ({
   step: state.step - 1,
 });
 
+/**
+ * Provides actions for `useEnvironmentStore`.
+ */
 export const actionSlice: StateCreator<
   EnvironmentStore,
   [],
