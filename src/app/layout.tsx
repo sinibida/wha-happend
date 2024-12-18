@@ -1,6 +1,5 @@
 import { CssBaseline } from "@mui/material";
 import "./globals.css";
-import "./vars.css";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
