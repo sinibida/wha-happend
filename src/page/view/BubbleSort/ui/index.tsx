@@ -1,55 +1,54 @@
 "use client";
 
-import { Box, Button, Container, Divider, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Divider,
+  Paper,
+  Typography,
+} from "@mui/material";
+import useIndexing from "../lib/useIndexing";
 import Cell from "./Cell";
-import { styled } from "@mui/system";
-
-// TODO: `styled` needs 'use client'?? What???
-const CellContainer = styled(Box)(() => ({
-  display: "flex",
-  gap: 4,
-  padding: 16,
-}));
-const ToolbarContainer = styled(Box)(() => ({
-  display: "flex",
-  padding: 8,
-  gap: 8,
-}));
-const DocsContainer = styled(Box)(() => ({
-  padding: "16px 0",
-}));
 
 export default function BubbleSortPage() {
+  const { lastCommand, state, step, stepTo } = useIndexing();
+
   const onPrevClick = () => {
-    console.log('TODO: onPrevClick')
+    console.log("TODO: onPrevClick");
   };
   const onNextClick = () => {
-    console.log('TODO: onNextClick')
+    console.log("TODO: onNextClick");
   };
 
   return (
     <Container maxWidth="lg">
       <Typography variant="h3">Bubble Sort</Typography>
 
-      <CellContainer>
-        <Cell>5</Cell>
-        <Cell>2</Cell>
-        <Cell>3</Cell>
-        <Cell>4</Cell>
-        <Cell>1</Cell>
-      </CellContainer>
+      <Box>
+        <Paper variant="outlined" sx={{ gap: 1, p: 2, display: "flex" }}>
+          {state.array.map((x) => (
+            <Cell key={x}>{x}</Cell>
+          ))}
+        </Paper>
 
-      <ToolbarContainer>
+        <Box sx={{ gap: 1, p: 2 }}>
+          <Typography>{JSON.stringify(lastCommand)}</Typography>
+          <Typography>step: {step}/100</Typography>
+        </Box>
+      </Box>
+
+      <Box sx={{ gap: 1, p: 2 }}>
         <Button onClick={onPrevClick}>Prev</Button>
         <Button onClick={onNextClick}>Next</Button>
-      </ToolbarContainer>
+      </Box>
 
       <Divider />
 
-      <DocsContainer>
+      <Box sx={{ gap: 1, p: 2 }}>
         <Typography variant="h3">Bubble Sort</Typography>
         <Typography variant="body1">It's good.</Typography>
-      </DocsContainer>
+      </Box>
     </Container>
   );
 }
