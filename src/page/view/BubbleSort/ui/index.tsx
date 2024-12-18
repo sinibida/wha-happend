@@ -4,6 +4,7 @@ import { Box, Button, Container, Divider, Typography } from "@mui/material";
 import Cell from "./Cell";
 import { styled } from "@mui/system";
 
+// TODO: `styled` needs 'use client'?? What???
 const CellContainer = styled(Box)(() => ({
   display: "flex",
   gap: 4,
@@ -18,7 +19,7 @@ const DocsContainer = styled(Box)(() => ({
   padding: "16px 0",
 }));
 
-export default function HomePage() {
+export default function BubbleSortPage() {
   const onPrevClick = () => {
     console.log('TODO: onPrevClick')
   };
