@@ -40,6 +40,14 @@ export default function BubbleSortPage() {
           },
         }),
   };
+  const elevationMap: Record<number, number> = {
+    ...(lastCommand?.type !== "compare"
+      ? {}
+      : {
+          [lastCommand.payload.indexA]: 8,
+          [lastCommand.payload.indexB]: 8,
+        }),
+  };
 
   const initializedRef = useRef(false);
   useEffect(() => {
@@ -58,14 +66,14 @@ export default function BubbleSortPage() {
       <Box>
         <Paper variant="outlined" sx={{ gap: 1, p: 2, display: "flex" }}>
           {state.array.map((x, i) => (
-            <Cell key={x} sx={sxMap[i]}>
+            <Cell key={x} sx={sxMap[i]} elevation={elevationMap[i]}>
               {x}
             </Cell>
           ))}
         </Paper>
 
         <Box sx={{ gap: 1, p: 2 }}>
-          <Typography>{JSON.stringify(lastCommand)}</Typography>
+          <Typography>{lastCommand?.message ?? "(Initial)"}</Typography>
           <Typography>
             step: {step}/{maxStep}
           </Typography>
