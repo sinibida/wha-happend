@@ -1,52 +1,44 @@
 "use client";
 
 import {
+  ExpandMore,
+  KeyboardArrowLeft,
+  KeyboardArrowRight,
+  KeyboardDoubleArrowLeft,
+  KeyboardDoubleArrowRight,
+} from "@mui/icons-material";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Box,
   Button,
   Container,
   Divider,
   Paper,
-  SxProps,
-  Theme,
+  TextField,
   Typography,
 } from "@mui/material";
+import { useEffect, useRef, useState } from "react";
 import useIndexing from "../indexing/useIndexing";
-import Cell from "./Cell";
-import { useEffect, useRef } from "react";
+import CellStateViewer from "./CellStateViewer";
 
 export default function BubbleSortPage() {
   const { lastCommand, state, step, maxStep, goto, initialize } = useIndexing();
 
-  const onPrevClick = () => {
-    goto(step - 1);
-  };
-  const onNextClick = () => {
-    goto(step + 1);
-  };
-  const isPrevEnabled = step > 0;
-  const isNextEnabled = step < maxStep;
+  const [arrayInput, setArrayInput] = useState("1,10,3,4,2");
 
-  const sxMap: Record<number, SxProps<Theme>> = {
-    ...(lastCommand?.type !== "swap"
-      ? {}
-      : {
-          [lastCommand.payload.indexA]: {
-            backgroundColor: "primary.main",
-            color: "primary.contrastText",
-          },
-          [lastCommand.payload.indexB]: {
-            backgroundColor: "primary.main",
-            color: "primary.contrastText",
-          },
-        }),
-  };
-  const elevationMap: Record<number, number> = {
-    ...(lastCommand?.type !== "compare"
-      ? {}
-      : {
-          [lastCommand.payload.indexA]: 8,
-          [lastCommand.payload.indexB]: 8,
-        }),
+  const getNavigateButtonProps = (delta: number) => ({
+    onClick: () => goto(step + delta),
+    disabled: !(step + delta >= 0 && step + delta <= maxStep),
+  });
+  const onInitializeClick = () => {
+    initialize({
+      array: arrayInput
+        .split(",")
+        .map((x) => x.trim())
+        .map((x) => parseInt(x)),
+    });
   };
 
   const initializedRef = useRef(false);
@@ -63,33 +55,86 @@ export default function BubbleSortPage() {
     <Container maxWidth="lg">
       <Typography variant="h3">Bubble Sort</Typography>
 
-      <Box>
-        <Paper variant="outlined" sx={{ gap: 1, p: 2, display: "flex" }}>
-          {state.array.map((x, i) => (
-            <Cell key={x} sx={sxMap[i]} elevation={elevationMap[i]}>
-              {x}
-            </Cell>
-          ))}
-        </Paper>
+      {/* Player */}
+      <Box sx={{ display: "flex", flexDirection: "column" }}>
+        <Box sx={{ mb: 2 }}>
+          {/* State Viewer */}
+          <Paper variant="outlined" sx={{ p: 2, mb: 1 }}>
+            {/* LATER: create BarStateViewer */}
+            <CellStateViewer state={state} lastCommand={lastCommand} />
+            <Divider sx={{ mt: 2, mb: 2 }} />
+            <Typography>{lastCommand?.message ?? "(Initial)"}</Typography>
+          </Paper>
+          {/* Option Accordion */}
+          <Box>
+            <Accordion variant="outlined">
+              <AccordionSummary expandIcon={<ExpandMore />}>
+                Options
+              </AccordionSummary>
+              <AccordionDetails>
+                <TextField
+                  label="Array"
+                  placeholder="1,2,3,4,5"
+                  value={arrayInput}
+                  onChange={(e) => setArrayInput(e.target.value)}
+                />
+                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                  <Button variant="contained" onClick={onInitializeClick}>
+                    Initialize
+                  </Button>
+                </Box>
+              </AccordionDetails>
+            </Accordion>
+          </Box>
+        </Box>
 
-        <Box sx={{ gap: 1, p: 2 }}>
-          <Typography>{lastCommand?.message ?? "(Initial)"}</Typography>
-          <Typography>
+        {/* Step Navigator */}
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            alignSelf: "center",
+            flexDirection: "column",
+            gap: 1,
+          }}
+        >
+          <Box sx={{ gap: 2, display: "flex" }}>
+            <Button
+              title="-10 step"
+              variant="outlined"
+              {...getNavigateButtonProps(-10)}
+            >
+              <KeyboardDoubleArrowLeft />
+            </Button>
+            <Button
+              title="-1 step"
+              variant="contained"
+              {...getNavigateButtonProps(-1)}
+            >
+              <KeyboardArrowLeft />
+            </Button>
+            <Button
+              title="+1 step"
+              variant="contained"
+              {...getNavigateButtonProps(1)}
+            >
+              <KeyboardArrowRight />
+            </Button>
+            <Button
+              title="+10 step"
+              variant="outlined"
+              {...getNavigateButtonProps(10)}
+            >
+              <KeyboardDoubleArrowRight />
+            </Button>
+          </Box>
+          <Typography variant="subtitle2" sx={{ color: "text.secondary" }}>
             step: {step}/{maxStep}
           </Typography>
         </Box>
       </Box>
 
-      <Box sx={{ gap: 1, p: 2 }}>
-        <Button disabled={!isPrevEnabled} onClick={onPrevClick}>
-          Prev
-        </Button>
-        <Button disabled={!isNextEnabled} onClick={onNextClick}>
-          Next
-        </Button>
-      </Box>
-
-      <Divider />
+      <Divider sx={{ mt: 4, mb: 4 }} />
 
       <Box sx={{ gap: 1, p: 2 }}>
         <Typography variant="h3">Bubble Sort</Typography>
