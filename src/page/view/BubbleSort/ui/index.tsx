@@ -12,9 +12,10 @@ import {
 } from "@mui/material";
 import useIndexing from "../indexing/useIndexing";
 import Cell from "./Cell";
+import { useEffect, useRef } from "react";
 
 export default function BubbleSortPage() {
-  const { lastCommand, state, step, maxStep, goto } = useIndexing();
+  const { lastCommand, state, step, maxStep, goto, initialize } = useIndexing();
 
   const onPrevClick = () => {
     goto(step - 1);
@@ -40,6 +41,16 @@ export default function BubbleSortPage() {
         }),
   };
 
+  const initializedRef = useRef(false);
+  useEffect(() => {
+    if (!initializedRef.current) {
+      initialize({
+        array: [1, 10, 3, 4, 2],
+      });
+      initializedRef.current = true;
+    }
+  }, [initialize]);
+
   return (
     <Container maxWidth="lg">
       <Typography variant="h3">Bubble Sort</Typography>
@@ -55,13 +66,19 @@ export default function BubbleSortPage() {
 
         <Box sx={{ gap: 1, p: 2 }}>
           <Typography>{JSON.stringify(lastCommand)}</Typography>
-          <Typography>step: {step}/{maxStep}</Typography>
+          <Typography>
+            step: {step}/{maxStep}
+          </Typography>
         </Box>
       </Box>
 
       <Box sx={{ gap: 1, p: 2 }}>
-        <Button disabled={!isPrevEnabled} onClick={onPrevClick}>Prev</Button>
-        <Button disabled={!isNextEnabled} onClick={onNextClick}>Next</Button>
+        <Button disabled={!isPrevEnabled} onClick={onPrevClick}>
+          Prev
+        </Button>
+        <Button disabled={!isNextEnabled} onClick={onNextClick}>
+          Next
+        </Button>
       </Box>
 
       <Divider />

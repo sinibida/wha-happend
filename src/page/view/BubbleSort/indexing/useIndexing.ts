@@ -1,5 +1,5 @@
-import { State } from "../model/types";
 import { Command } from "../model/command";
+import { InitializeArgs, State } from "../model/types";
 import { useEnvironmentStore } from "./environmentStore";
 
 type Data = {
@@ -10,6 +10,7 @@ type Data = {
    * Maximum(INCLUSIVE) value of `step`.
    */
   maxStep: number;
+  initialize: (args: InitializeArgs) => void;
 };
 
 type Action = {
@@ -19,7 +20,7 @@ type Action = {
 export type useIndexingReturn = Data & Action;
 
 export default function useIndexing(): useIndexingReturn {
-  const { state, receipt, step, goto } = useEnvironmentStore();
+  const { state, receipt, step, goto, initialize } = useEnvironmentStore();
   const lastCommand = step === 0 ? undefined : receipt.commands[step - 1];
   const maxStep = receipt.commands.length;
 
@@ -29,5 +30,6 @@ export default function useIndexing(): useIndexingReturn {
     step,
     maxStep,
     goto,
+    initialize,
   };
 }

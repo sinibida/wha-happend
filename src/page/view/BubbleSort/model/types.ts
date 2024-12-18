@@ -4,6 +4,10 @@ export type State = {
   array: number[];
 };
 
+export type InitializeArgs = {
+  array: number[];
+};
+
 export type Receipt = {
   initialState: State;
   commands: Command[];

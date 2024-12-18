@@ -1,8 +1,8 @@
 import { Receipt } from "../model/types";
-import { EnvironmentData } from "./environmentStore";
+import { EnvironmentData } from "../indexing/environmentStore";
 
 // STUB
-const stubReceipt: Receipt = {
+export const stubReceipt: Receipt = {
   initialState: { array: [1, 3, 5, 2, 4] },
   commands: [
     {
