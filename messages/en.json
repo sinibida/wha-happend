@@ -1,5 +1,15 @@
 {
   "Common": {
     "title": "Wha Happend?"
+  },
+  "view": {
+    "common": {
+      "option": "Options",
+      "step_info": "Step: {step, number}/{maxStep, number}",
+      "apply": "Apply"
+    },
+    "BubbleSort": {
+      "title": "Bubble Sort"
+    }
   }
 }
