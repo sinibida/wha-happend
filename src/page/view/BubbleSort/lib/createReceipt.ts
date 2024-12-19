@@ -1,6 +1,7 @@
 import { Command } from "../model/command";
 import { InitializeArgs, Receipt } from "../model/types";
 
+// TODO: Use i18n on messages
 export default function createReceipt(args: InitializeArgs): Receipt {
   const commands: Command[] = [];
   const draft = [...args.array];

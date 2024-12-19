@@ -5,7 +5,7 @@ import {
   KeyboardArrowLeft,
   KeyboardArrowRight,
   KeyboardDoubleArrowLeft,
-  KeyboardDoubleArrowRight,
+  KeyboardDoubleArrowRight
 } from "@mui/icons-material";
 import {
   Accordion,
@@ -19,12 +19,15 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import useIndexing from "../indexing/useIndexing";
 import CellStateViewer from "./CellStateViewer";
 
 export default function BubbleSortPage() {
   const { lastCommand, state, step, maxStep, goto, initialize } = useIndexing();
+  const t = useTranslations("view.BubbleSort");
+  const tc = useTranslations("view.common");
 
   // TODO: Improve performance: editing arrayInput freezes the whole site for a moment.
   // TODO: Dragging & Zooming feature
@@ -55,7 +58,7 @@ export default function BubbleSortPage() {
 
   return (
     <Container maxWidth="lg">
-      <Typography variant="h3">Bubble Sort</Typography>
+      <Typography variant="h3">{t("title")}</Typography>
 
       {/* Player */}
       <Box sx={{ display: "flex", flexDirection: "column" }}>
@@ -71,7 +74,7 @@ export default function BubbleSortPage() {
           <Box>
             <Accordion variant="outlined">
               <AccordionSummary expandIcon={<ExpandMore />}>
-                Options
+                {tc("option")}
               </AccordionSummary>
               <AccordionDetails>
                 <TextField
@@ -82,7 +85,7 @@ export default function BubbleSortPage() {
                 />
                 <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                   <Button variant="contained" onClick={onInitializeClick}>
-                    Initialize
+                    {tc("apply")}
                   </Button>
                 </Box>
               </AccordionDetails>
@@ -131,7 +134,7 @@ export default function BubbleSortPage() {
             </Button>
           </Box>
           <Typography variant="subtitle2" sx={{ color: "text.secondary" }}>
-            step: {step}/{maxStep}
+            {tc("step_info", { step, maxStep })}
           </Typography>
         </Box>
       </Box>
