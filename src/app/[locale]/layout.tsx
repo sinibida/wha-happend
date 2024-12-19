@@ -3,6 +3,7 @@ import { CssBaseline } from "@mui/material";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
+import BaseLayout from "@/layout/Home";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -43,7 +44,9 @@ export default async function LocaleLayout({
       <body>
         <NextIntlClientProvider messages={messages}>
           <CssBaseline enableColorScheme />
+          <BaseLayout>
           {children}
+          </BaseLayout>
         </NextIntlClientProvider>
       </body>
     </html>
