@@ -5,7 +5,7 @@ import {
   KeyboardArrowLeft,
   KeyboardArrowRight,
   KeyboardDoubleArrowLeft,
-  KeyboardDoubleArrowRight,
+  KeyboardDoubleArrowRight
 } from "@mui/icons-material";
 import {
   Accordion,
@@ -85,7 +85,7 @@ export default function BubbleSortPage() {
                 />
                 <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                   <Button variant="contained" onClick={onInitializeClick}>
-                    Initialize
+                    {tc("apply")}
                   </Button>
                 </Box>
               </AccordionDetails>

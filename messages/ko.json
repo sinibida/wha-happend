@@ -5,7 +5,8 @@
   "view": {
     "common": {
       "option": "설정",
-      "step_info": "과정: {step, number}/{maxStep, number}"
+      "step_info": "과정: {step, number}/{maxStep, number}",
+      "apply": "적용"
     },
     "BubbleSort": {
       "title": "버블 정렬"
