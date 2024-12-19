@@ -1,5 +1,4 @@
-// import HomePage from "@/page/view/BubbleSort";
-
-// export default function Page() {
-//   return <HomePage />;
-// }
+export default function Page() {
+  // STUB
+  return <p>TODO</p>;
+}
