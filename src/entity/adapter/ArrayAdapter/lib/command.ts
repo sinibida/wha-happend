@@ -17,3 +17,8 @@ export type ArrayCompareCommand = {
     indexB: number;
   };
 };
+
+const types: unknown[] = ["swap", "compare"];
+export function isArrayCommand(obj: object): obj is ArrayCommand {
+  return "type" in obj && types.includes(obj.type);
+}
