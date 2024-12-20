@@ -1,15 +1,9 @@
 "use client";
 
-import OptionAccordion from "@/components/widget/OptionAccordion";
-import {
-  KeyboardArrowLeft,
-  KeyboardArrowRight,
-  KeyboardDoubleArrowLeft,
-  KeyboardDoubleArrowRight,
-} from "@mui/icons-material";
+import OptionAccordion from "@/components/widget/common/OptionAccordion";
+import StepNavigator from "@/components/widget/common/StepNavigator";
 import {
   Box,
-  Button,
   Container,
   Divider,
   Paper,
@@ -24,16 +18,11 @@ import CellStateViewer from "./CellStateViewer";
 export default function InsertionSortPage() {
   const { lastCommand, state, step, maxStep, goto, initialize } = useIndexing();
   const t = useTranslations("view.InsertionSort");
-  const tc = useTranslations("view.common");
 
   // TODO: Improve performance: editing arrayInput freezes the whole site for a moment.
   // TODO: Dragging & Zooming feature
   const [arrayInput, setArrayInput] = useState("1,10,3,4,2");
 
-  const getNavigateButtonProps = (delta: number) => ({
-    onClick: () => goto(step + delta),
-    disabled: !(step + delta >= 0 && step + delta <= maxStep),
-  });
   const onInitializeClick = () => {
     initialize({
       array: arrayInput
@@ -80,56 +69,13 @@ export default function InsertionSortPage() {
         </Box>
 
         {/* Step Navigator */}
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            alignSelf: "center",
-            flexDirection: "column",
-            gap: 1,
-          }}
-        >
-          <Box sx={{ gap: 2, display: "flex" }}>
-            <Button
-              title="-10 step"
-              variant="outlined"
-              {...getNavigateButtonProps(-10)}
-            >
-              <KeyboardDoubleArrowLeft />
-            </Button>
-            <Button
-              title="-1 step"
-              variant="contained"
-              {...getNavigateButtonProps(-1)}
-            >
-              <KeyboardArrowLeft />
-            </Button>
-            <Button
-              title="+1 step"
-              variant="contained"
-              {...getNavigateButtonProps(1)}
-            >
-              <KeyboardArrowRight />
-            </Button>
-            <Button
-              title="+10 step"
-              variant="outlined"
-              {...getNavigateButtonProps(10)}
-            >
-              <KeyboardDoubleArrowRight />
-            </Button>
-          </Box>
-          <Typography variant="subtitle2" sx={{ color: "text.secondary" }}>
-            {tc("step_info", { step, maxStep })}
-          </Typography>
-        </Box>
+        <StepNavigator maxStep={maxStep} onGoto={(x) => goto(x)} step={step} />
       </Box>
-
       <Divider sx={{ mt: 4, mb: 4 }} />
 
       <Box sx={{ gap: 1, p: 2 }}>
-        <Typography variant="h3">Bubble Sort</Typography>
-        <Typography variant="body1">It&apos;s good.</Typography>
+        <Typography variant="h3">Insertion Sort</Typography>
+        <Typography variant="body1">It&apos;s also good.</Typography>
       </Box>
     </Container>
   );
