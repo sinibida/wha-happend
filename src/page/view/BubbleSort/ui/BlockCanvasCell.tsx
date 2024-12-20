@@ -33,7 +33,7 @@ export default function BlockCanvasCell({
   const elevation: number | undefined = showCompare ? 8 : undefined;
 
   return (
-    <Canvas.Cell data={{ id: `${value}`, x: index * 100, y: 0 }}>
+    <Canvas.Cell data={{ id: `${value}`, x: (index % 10) * 70, y: Math.floor(index / 10) * 70, }}>
       <Block sx={sx} elevation={elevation} idx={index}>
         {value}
       </Block>
