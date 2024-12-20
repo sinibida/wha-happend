@@ -1,4 +1,5 @@
 import BubbleSortPage from "@/page/view/BubbleSort";
+import { loadMDX } from "@/shared/snippet/loadMDX";
 import { Metadata } from "next";
 import { getLocale } from "next-intl/server";
 
@@ -8,7 +9,6 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   const locale = await getLocale();
-  const Manual = (await import(`mdx/${locale}/view/bubble-sort/index.mdx`))
-    .default;
+  const Manual = await loadMDX(locale, "view/bubble-sort");
   return <BubbleSortPage manual={<Manual />} />;
 }
