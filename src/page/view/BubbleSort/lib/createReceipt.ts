@@ -1,8 +1,11 @@
+import { Receipt } from "../indexing/types";
 import { Command } from "../model/command";
-import { InitializeArgs, Receipt } from "../model/types";
+import { InitializeArgs, State } from "../model/types";
 
 // TODO: Use i18n on messages
-export default function createReceipt(args: InitializeArgs): Receipt {
+export default function createReceipt(
+  args: InitializeArgs
+): Receipt<State, Command> {
   const commands: Command[] = [];
   const draft = [...args.array];
 

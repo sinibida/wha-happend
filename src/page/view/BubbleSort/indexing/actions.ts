@@ -1,54 +1,43 @@
 import { StateCreator } from "zustand";
-import createReceipt from "../lib/createReceipt";
-import executeCommand from "../lib/executeCommand";
-import unexecuteCommand from "../lib/unexecuteCommand";
-import { InitializeArgs } from "../model/types";
-import { EnvironmentData, EnvironmentStore } from "./environmentStore";
+import { EnvironmentStore } from "./environmentStore";
+import { Receipt } from "./types";
 
-export type EnvironmentAction = {
-  next: () => void;
-  prev: () => void;
-  goto: (step: number) => void;
-  initialize: (args: InitializeArgs) => void;
+export type EnvironmentAction<S, C> = {
+  next: (executeCommand: CommandExecutor<S, C>) => void;
+  prev: (coexecuteCommand: CommandExecutor<S, C>) => void;
+  initialize: (receipt: Receipt<S, C>) => void;
 };
-
-const nextRaw = (state: EnvironmentData) => ({
-  state: executeCommand(state.state, state.receipt.commands[state.step]),
-  step: state.step + 1,
-});
-const prevRaw = (state: EnvironmentData) => ({
-  state: unexecuteCommand(state.state, state.receipt.commands[state.step - 1]),
-  step: state.step - 1,
-});
+export type CommandExecutor<S, C> = (state: S, command: C) => S;
 
 /**
  * Provides actions for `useEnvironmentStore`.
  */
-export const actionSlice: StateCreator<
-  EnvironmentStore,
-  [],
-  [],
-  EnvironmentAction
-> = (set) => ({
-  initialize: (args: InitializeArgs) => {
-    const receipt = createReceipt(args);
-    set({ receipt, state: receipt.initialState, step: 0 });
-  },
-  next: () => set(nextRaw),
-  prev: () => set(prevRaw),
-  goto: (step: number) =>
-    set((state) => {
-      let ref = state;
-      let remaining = step - ref.step;
-      while (remaining > 0) {
-        ref = { ...ref, ...nextRaw(ref) };
-        remaining--;
-      }
-      while (remaining < 0) {
-        ref = { ...ref, ...prevRaw(ref) };
-        remaining++;
-      }
+export const getActionSlice = <S, C>() => {
+  const actionSlice: StateCreator<
+    EnvironmentStore<S, C>,
+    [],
+    [],
+    EnvironmentAction<S, C>
+  > = (set) => ({
+    initialize(receipt: Receipt<S, C>) {
+      // const receipt = createReceipt(args);
+      set({ receipt, state: receipt.initialState, step: 0 });
+    },
 
-      return ref;
-    }),
-});
+    next(execute: CommandExecutor<S, C>) {
+      set((state) => ({
+        state: execute(state.state, state.receipt.commands[state.step]),
+        step: state.step + 1,
+      }));
+    },
+    prev(coexecute: CommandExecutor<S, C>) {
+      set((state) => ({
+        state: coexecute(state.state, state.receipt.commands[state.step - 1]),
+        step: state.step - 1,
+      }));
+    },
+
+    // goto => useIndexer
+  });
+  return actionSlice;
+};

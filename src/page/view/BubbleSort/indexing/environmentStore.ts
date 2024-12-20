@@ -1,34 +1,15 @@
-import { create, StateCreator } from "zustand";
-import { State } from "../model/types";
-import { actionSlice, EnvironmentAction } from "./actions";
+import { create } from "zustand";
+import { EnvironmentAction, getActionSlice } from "./actions";
 import { Receipt } from "./types";
-import { Command } from "../model/command";
 
-export type EnvironmentData = {
-  receipt: Receipt<State, Command>;
-  state: State;
+export type EnvironmentData<S, C> = {
+  receipt: Receipt<S, C>;
+  state: S;
   step: number;
 };
-const defaultData: EnvironmentData = {
-  // LATER: Refactor this out
-  receipt: {
-    initialState: {
-      array: [],
-    },
-    commands: [],
-  },
-  state: {
-    array: [],
-  },
-  step: 0,
-};
-/**
- * Provides data for `useEnvironmentStore`.
- */
-const dataSlice: StateCreator<EnvironmentStore, [], [], EnvironmentData> = () =>
-  defaultData;
 
-export type EnvironmentStore = EnvironmentData & EnvironmentAction;
+export type EnvironmentStore<S, C> = EnvironmentData<S, C> &
+  EnvironmentAction<S, C>;
 
 /**
  * 'Environment' contains ALL data that the indexer needs (except target step).
@@ -38,7 +19,10 @@ export type EnvironmentStore = EnvironmentData & EnvironmentAction;
  * - current state
  * - current step
  */
-export const useEnvironmentStore = create<EnvironmentStore>()((...a) => ({
-  ...dataSlice(...a),
-  ...actionSlice(...a),
-}));
+export const createEnvironmentStore = <S, C>(
+  defaultData: EnvironmentData<S, C>
+) =>
+  create<EnvironmentStore<S, C>>()((...a) => ({
+    ...defaultData,
+    ...getActionSlice<S, C>()(...a),
+  }));

@@ -1,4 +1,4 @@
-export type Receipt<State, Command> = {
-  initialState: State;
-  commands: Command[];
+export type Receipt<S, C> = {
+  initialState: S;
+  commands: C[];
 };
