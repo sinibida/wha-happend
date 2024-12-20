@@ -34,7 +34,6 @@ export default function InsertionSortPage({
   const t = useTranslations("view.InsertionSort");
 
   // TODO: Improve performance: editing arrayInput freezes the whole site for a moment.
-  // TODO: Dragging & Zooming feature
   const [arrayInput, setArrayInput] = useState("1,10,3,4,2");
 
   const onInitializeClick = () => {

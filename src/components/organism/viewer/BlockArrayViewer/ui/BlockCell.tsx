@@ -7,13 +7,15 @@ import Block from "./Block";
 export default function BlockCanvasCell({
   value,
   index,
+  x,
+  y,
   lastCommand,
-  wrapPer = 10,
 }: {
   value: number;
   index: number;
+  x: number;
+  y: number;
   lastCommand?: ArrayCommand | BaseCommand;
-  wrapPer?: number,
 }) {
   const showSwap =
     lastCommand?.type === "swap" &&
@@ -32,9 +34,6 @@ export default function BlockCanvasCell({
       : {}),
   };
   const elevation: number | undefined = showCompare ? 8 : undefined;
-
-  const x = (index % wrapPer) * 70;
-  const y = Math.floor(index / wrapPer) * 70;
 
   const style: React.CSSProperties = {
     left: x,
