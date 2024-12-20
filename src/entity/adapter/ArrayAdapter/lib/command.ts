@@ -1,6 +1,6 @@
-export type ArrayCommand = ArraySwapCommand | ArrayCompareCommand;
+export type Command = SwapCommand | CompareCommand;
 
-export type ArraySwapCommand = {
+type SwapCommand = {
   type: "swap";
   message: string;
   payload: {
@@ -9,7 +9,7 @@ export type ArraySwapCommand = {
   };
 };
 
-export type ArrayCompareCommand = {
+type CompareCommand = {
   type: "compare";
   message: string;
   payload: {
@@ -19,6 +19,6 @@ export type ArrayCompareCommand = {
 };
 
 const types: unknown[] = ["swap", "compare"];
-export function isArrayCommand(obj: object): obj is ArrayCommand {
+export function isCommand(obj: object): obj is Command {
   return "type" in obj && types.includes(obj.type);
 }

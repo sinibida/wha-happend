@@ -1,7 +1,7 @@
 import { produce } from "immer";
-import { ArrayCommand } from "./command";
+import { Command } from "./command";
 
-export default function executeCommand<T>(state: T[], command: ArrayCommand): T[] {
+export default function executeCommand<T>(state: T[], command: Command): T[] {
   switch (command.type) {
     case "swap": {
       const { indexA: a, indexB: b } = command.payload;

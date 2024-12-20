@@ -1,6 +1,7 @@
 import {
   executeArrayCommand,
   isArrayCommand,
+  unexecuteArrayCommand,
 } from "@/entity/adapter/ArrayAdapter";
 import { Command } from "../model/command";
 import { State } from "../model/store";
@@ -20,7 +21,7 @@ export function unexecuteCommand(state: State, command: Command): State {
   if (isArrayCommand(command)) {
     return {
       ...state,
-      array: executeArrayCommand(state.array, command),
+      array: unexecuteArrayCommand(state.array, command),
     };
   }
 
