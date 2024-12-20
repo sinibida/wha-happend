@@ -1,9 +1,11 @@
 import { create, StateCreator } from "zustand";
-import { Receipt, State } from "../model/types";
+import { State } from "../model/types";
 import { actionSlice, EnvironmentAction } from "./actions";
+import { Receipt } from "./types";
+import { Command } from "../model/command";
 
 export type EnvironmentData = {
-  receipt: Receipt;
+  receipt: Receipt<State, Command>;
   state: State;
   step: number;
 };
@@ -30,7 +32,7 @@ export type EnvironmentStore = EnvironmentData & EnvironmentAction;
 
 /**
  * 'Environment' contains ALL data that the indexer needs (except target step).
- * 
+ *
  * It usually contains but not limited to the following data.
  * - calculated receipt
  * - current state
