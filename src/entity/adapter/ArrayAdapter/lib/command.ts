@@ -1,6 +1,6 @@
 export type Command = SwapCommand | CompareCommand;
 
-type SwapCommand = {
+export type SwapCommand = {
   type: "swap";
   message: string;
   payload: {
@@ -9,7 +9,7 @@ type SwapCommand = {
   };
 };
 
-type CompareCommand = {
+export type CompareCommand = {
   type: "compare";
   message: string;
   payload: {

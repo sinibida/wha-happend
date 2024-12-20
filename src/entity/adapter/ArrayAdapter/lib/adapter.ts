@@ -1,4 +1,4 @@
-import { Command } from "./command";
+import { Command, CompareCommand, SwapCommand } from "./command";
 
 // TODO: Use i18n on messages
 export default class Adapter<T> {
@@ -18,7 +18,7 @@ export default class Adapter<T> {
         indexA: i,
         indexB: j,
       },
-    });
+    } satisfies CompareCommand);
 
     // @ts-expect-error If type do not support comparasion, then throw error.
     return this.data[i] - this.data[j];
@@ -28,7 +28,7 @@ export default class Adapter<T> {
     const temp = this.data[i];
     this.data[i] = this.data[j];
     this.data[j] = temp;
-    
+
     this.logFn({
       type: "swap",
       message: `Swap item ${i} and ${j}`,
@@ -36,6 +36,6 @@ export default class Adapter<T> {
         indexA: i,
         indexB: j,
       },
-    });
+    } satisfies SwapCommand);
   }
 }
