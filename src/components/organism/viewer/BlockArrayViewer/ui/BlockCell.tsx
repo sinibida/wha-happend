@@ -3,6 +3,7 @@ import { BaseCommand } from "@/entity/adapter/CommonAdapter";
 import { Theme } from "@emotion/react";
 import { SxProps } from "@mui/material";
 import Block from "./Block";
+import styles from "./BlockCell.module.css";
 
 export default function BlockCanvasCell({
   value,
@@ -41,8 +42,14 @@ export default function BlockCanvasCell({
     position: "absolute",
   };
 
+  const lastCommandData = showSwap
+    ? "swap"
+    : showCompare
+    ? "compare"
+    : undefined;
+
   return (
-    <div style={style}>
+    <div className={styles.container} data-last-command={lastCommandData} style={style}>
       <Block sx={sx} elevation={elevation} idx={index}>
         {value}
       </Block>
