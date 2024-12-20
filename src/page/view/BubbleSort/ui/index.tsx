@@ -14,8 +14,7 @@ import {
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import { createReceipt } from "../lib/createReceipt";
-import executeCommand from "../lib/executeCommand";
-import unexecuteCommand from "../lib/unexecuteCommand";
+import { executeCommand, unexecuteCommand } from "../lib/execute";
 import { useEnvironmentStore } from "../model/store";
 import CellStateViewer from "./CellStateViewer";
 

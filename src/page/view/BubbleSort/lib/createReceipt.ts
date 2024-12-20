@@ -1,7 +1,7 @@
 import { IndexerReceipt } from "@/hooks/useIndexer";
-import { Command } from "../model/command";
 import { State } from "../model/store";
 import getCommands from "./getCommands";
+import { Command } from "../model/command";
 
 export const createReceipt = (array: number[]) =>
   ({
