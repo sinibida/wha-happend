@@ -1,16 +1,13 @@
 "use client";
 
+import OptionAccordion from "@/components/widget/OptionAccordion";
 import {
-  ExpandMore,
   KeyboardArrowLeft,
   KeyboardArrowRight,
   KeyboardDoubleArrowLeft,
-  KeyboardDoubleArrowRight
+  KeyboardDoubleArrowRight,
 } from "@mui/icons-material";
 import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
   Box,
   Button,
   Container,
@@ -71,26 +68,15 @@ export default function InsertionSortPage() {
             <Typography>{lastCommand?.message ?? "(Initial)"}</Typography>
           </Paper>
           {/* Option Accordion */}
-          <Box>
-            <Accordion variant="outlined">
-              <AccordionSummary expandIcon={<ExpandMore />}>
-                {tc("option")}
-              </AccordionSummary>
-              <AccordionDetails>
-                <TextField
-                  label="Array"
-                  placeholder="1,2,3,4,5"
-                  value={arrayInput}
-                  onChange={(e) => setArrayInput(e.target.value)}
-                />
-                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-                  <Button variant="contained" onClick={onInitializeClick}>
-                    {tc("apply")}
-                  </Button>
-                </Box>
-              </AccordionDetails>
-            </Accordion>
-          </Box>
+          <OptionAccordion>
+            <TextField
+              label="Array"
+              placeholder="1,2,3,4,5"
+              value={arrayInput}
+              onChange={(e) => setArrayInput(e.target.value)}
+            />
+            <OptionAccordion.ApplyButton onClick={onInitializeClick} />
+          </OptionAccordion>
         </Box>
 
         {/* Step Navigator */}
