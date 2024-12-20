@@ -1,7 +1,7 @@
 import { Box, Paper, SxProps, Theme, Typography } from "@mui/material";
 import React from "react";
 
-export default function Cell({
+export default function Block({
   children,
   idx,
   sx,
