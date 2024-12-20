@@ -1,9 +1,9 @@
-import React from "react";
-import { Command } from "../model/command";
 import { Theme } from "@emotion/react";
-import { SxProps, Box } from "@mui/material";
-import Cell from "./Cell";
+import { Box, SxProps } from "@mui/material";
+import { Command } from "../model/command";
 import { State } from "../model/store";
+import Cell from "./Cell";
+import Canvas from "@/components/organism/Canvas";
 
 export default function CellStateViewer({
   state,
@@ -36,11 +36,21 @@ export default function CellStateViewer({
   };
 
   return (
-    <Box sx={{ gap: 1, display: "flex", flexWrap: "wrap" }}>
+    <Box
+      sx={{
+        gap: 1,
+        minWidth: 256,
+        width: 100 * Math.sqrt(state.array.length),
+        display: "flex",
+        flexWrap: "wrap",
+      }}
+    >
       {state.array.map((x, i) => (
-        <Cell key={i} sx={sxMap[i]} elevation={elevationMap[i]} idx={i}>
-          {x}
-        </Cell>
+        <Canvas.Cell key={i} data={{ id: `${i}`, x: i * 100, y: 0 }}>
+          <Cell key={i} sx={sxMap[i]} elevation={elevationMap[i]} idx={i}>
+            {x}
+          </Cell>
+        </Canvas.Cell>
       ))}
     </Box>
   );

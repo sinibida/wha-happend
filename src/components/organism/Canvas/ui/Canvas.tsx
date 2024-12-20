@@ -8,7 +8,7 @@ import CanvasCell from "./CanvasCell";
 
 export const CanvasContext = createContext<CanvasContextType>(null!);
 
-function Canvas({ children }: { children: React.ReactNode }) {
+function Canvas({ children }: { children?: React.ReactNode }) {
   const [transform, setTransform] = useState<CanvasTransform>({
     x: 0,
     y: 0,
@@ -42,20 +42,16 @@ function Canvas({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <div>
-      <div className={styles.container}>
-        <div className={styles.zoomCacatcher} ref={zoomCatcherRef}></div>
-        {/* Contents */}
-        <div className={styles.contentContainer}>
-          <CanvasContext.Provider value={contextValue}>
-            {children}
-          </CanvasContext.Provider>
-        </div>
-
-        <div className={styles.background} style={bgStyle}></div>
+    <div className={styles.container}>
+      <div className={styles.zoomCacatcher} ref={zoomCatcherRef}></div>
+      {/* Contents */}
+      <div className={styles.contentContainer}>
+        <CanvasContext.Provider value={contextValue}>
+          {children}
+        </CanvasContext.Provider>
       </div>
 
-      <div></div>
+      <div className={styles.background} style={bgStyle}></div>
     </div>
   );
 }

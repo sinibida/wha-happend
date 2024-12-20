@@ -3,10 +3,11 @@ import { CellData } from "../model";
 import { CanvasContext } from "./Canvas";
 
 export type CellProps = {
+  children: React.ReactNode;
   data: CellData;
 };
 
-export default function CanvasCell({ data }: CellProps) {
+export default function CanvasCell({ data, children }: CellProps) {
   const { transform: t } = useContext(CanvasContext);
 
   const calcX = data.x * t.k + t.x;
@@ -18,5 +19,5 @@ export default function CanvasCell({ data }: CellProps) {
     // https://developer.mozilla.org/en-US/docs/Web/CSS/transform-origin
     transformOrigin: "top left",
   };
-  return <div style={containerStyle}>{data.content}</div>;
+  return <div style={containerStyle}>{children}</div>;
 }

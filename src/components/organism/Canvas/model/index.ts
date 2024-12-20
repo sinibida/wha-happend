@@ -2,7 +2,6 @@ export type CellData = {
   id: string;
   x: number;
   y: number;
-  content: React.ReactNode;
 };
 
 export type CanvasTransform = {

@@ -18,6 +18,7 @@ import { executeCommand, unexecuteCommand } from "../lib/execute";
 import { useEnvironmentStore } from "../model/store";
 import CellStateViewer from "./CellStateViewer";
 import MDXManualRenderer from "@/components/wrapper/MDXManualRenderer";
+import Canvas from "@/components/organism/Canvas";
 
 export default function BubbleSortPage({
   manual,
@@ -65,7 +66,11 @@ export default function BubbleSortPage({
           {/* State Viewer */}
           <Paper variant="outlined" sx={{ p: 2, mb: 1 }}>
             {/* LATER: create BarStateViewer */}
-            <CellStateViewer state={state} lastCommand={lastCommand} />
+            <Box sx={{ height: 256 }}>
+              <Canvas>
+                <CellStateViewer state={state} lastCommand={lastCommand} />
+              </Canvas>
+            </Box>
             <Divider sx={{ mt: 2, mb: 2 }} />
             <Typography>{lastCommand?.message ?? "(Initial)"}</Typography>
           </Paper>
