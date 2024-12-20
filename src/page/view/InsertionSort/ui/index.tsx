@@ -1,5 +1,7 @@
 "use client";
 
+import Canvas from "@/components/organism/Canvas";
+import BlockArrayViewer from "@/components/organism/viewer/BlockArrayViewer";
 import OptionAccordion from "@/components/widget/common/OptionAccordion";
 import StepNavigator from "@/components/widget/common/StepNavigator";
 import MDXManualRenderer from "@/components/wrapper/MDXManualRenderer";
@@ -17,7 +19,6 @@ import { useEffect, useRef, useState } from "react";
 import { createReceipt } from "../lib/createReceipt";
 import { executeCommand, unexecuteCommand } from "../lib/execute";
 import { useEnvironmentStore } from "../model/store";
-import CellStateViewer from "./CellStateViewer";
 
 export default function InsertionSortPage({
   manual,
@@ -64,12 +65,20 @@ export default function InsertionSortPage({
         <Box sx={{ mb: 2 }}>
           {/* State Viewer */}
           <Paper variant="outlined" sx={{ p: 2, mb: 1 }}>
-            {/* LATER: create BarStateViewer */}
-            <CellStateViewer state={state} lastCommand={lastCommand} />
+            <Box sx={{ height: 256 }}>
+              <Canvas>
+                <Canvas.Cell data={{ id: `0`, x: 0, y: 0 }}>
+                  <BlockArrayViewer
+                    array={state.array}
+                    lastCommand={lastCommand}
+                  />
+                </Canvas.Cell>
+              </Canvas>
+            </Box>
             <Divider sx={{ mt: 2, mb: 2 }} />
             <Typography>{lastCommand?.message ?? "(Initial)"}</Typography>
           </Paper>
-          {/* Option Accordion */}
+
           <OptionAccordion>
             <TextField
               label="Array"
