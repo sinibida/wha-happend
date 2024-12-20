@@ -1,4 +1,3 @@
-import Canvas from "@/components/organism/Canvas";
 import { ArrayCommand } from "@/entity/adapter/ArrayAdapter";
 import { BaseCommand } from "@/entity/adapter/CommonAdapter";
 import { Theme } from "@emotion/react";
@@ -9,10 +8,12 @@ export default function BlockCanvasCell({
   value,
   index,
   lastCommand,
+  wrapPer = 10,
 }: {
   value: number;
   index: number;
   lastCommand?: ArrayCommand | BaseCommand;
+  wrapPer?: number,
 }) {
   const showSwap =
     lastCommand?.type === "swap" &&
@@ -32,11 +33,20 @@ export default function BlockCanvasCell({
   };
   const elevation: number | undefined = showCompare ? 8 : undefined;
 
+  const x = (index % wrapPer) * 70;
+  const y = Math.floor(index / wrapPer) * 70;
+
+  const style: React.CSSProperties = {
+    left: x,
+    top: y,
+    position: "absolute",
+  };
+
   return (
-    <Canvas.Cell data={{ id: `${value}`, x: (index % 10) * 70, y: Math.floor(index / 10) * 70, }}>
+    <div style={style}>
       <Block sx={sx} elevation={elevation} idx={index}>
         {value}
       </Block>
-    </Canvas.Cell>
+    </div>
   );
 }

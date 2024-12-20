@@ -16,7 +16,7 @@ import { useEffect, useRef, useState } from "react";
 import { createReceipt } from "../lib/createReceipt";
 import { executeCommand, unexecuteCommand } from "../lib/execute";
 import { useEnvironmentStore } from "../model/store";
-import BlockStateViewer from "./BlockStateViewer";
+import BlockArrayViewer from "@/components/organism/viewer/BlockArrayViewer";
 import MDXManualRenderer from "@/components/wrapper/MDXManualRenderer";
 import Canvas from "@/components/organism/Canvas";
 
@@ -68,7 +68,12 @@ export default function BubbleSortPage({
             {/* LATER: create BarStateViewer */}
             <Box sx={{ height: 256 }}>
               <Canvas>
-                <BlockStateViewer state={state} lastCommand={lastCommand} />
+                <Canvas.Cell data={{ id: `0`, x: 0, y: 0 }}>
+                  <BlockArrayViewer
+                    array={state.array}
+                    lastCommand={lastCommand}
+                  />
+                </Canvas.Cell>
               </Canvas>
             </Box>
             <Divider sx={{ mt: 2, mb: 2 }} />
