@@ -1,5 +1,3 @@
 export {default} from "./ui";
 
-// LEFT OFF: Create Insertion sort site to...
-// - find generalization
-// - dicide routing
+// LEFT OFF: 이제 로직을 어떻게 분리해낼지 고민해야대...
