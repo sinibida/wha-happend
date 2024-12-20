@@ -6,9 +6,5 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  // Enable static rendering
-  // TODO: I don't need it? Why??
-  // setRequestLocale(locale);
-
   return <BubbleSortPage />;
 }

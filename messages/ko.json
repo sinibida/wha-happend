@@ -10,6 +10,9 @@
     },
     "BubbleSort": {
       "title": "버블 정렬"
+    },
+    "InsertionSort": {
+      "title": "삽입 정렬"
     }
   }
 }
