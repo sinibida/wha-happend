@@ -1,11 +1,16 @@
 import { create } from "zustand";
-import { EnvironmentAction, getActionSlice } from "./actions";
-import { Receipt } from "./types";
+import { CommandExecutor, Receipt } from "./types";
 
 export type EnvironmentData<S, C> = {
   receipt: Receipt<S, C>;
   state: S;
   step: number;
+};
+
+export type EnvironmentAction<S, C> = {
+  next: (executeCommand: CommandExecutor<S, C>) => void;
+  prev: (coexecuteCommand: CommandExecutor<S, C>) => void;
+  initialize: (receipt: Receipt<S, C>) => void;
 };
 
 export type EnvironmentStore<S, C> = EnvironmentData<S, C> &
@@ -22,7 +27,28 @@ export type EnvironmentStore<S, C> = EnvironmentData<S, C> &
 export const createEnvironmentStore = <S, C>(
   defaultData: EnvironmentData<S, C>
 ) =>
-  create<EnvironmentStore<S, C>>()((...a) => ({
+  create<EnvironmentStore<S, C>>()((set) => ({
+    // Data
+
     ...defaultData,
-    ...getActionSlice<S, C>()(...a),
+
+    // Actions
+
+    initialize(receipt: Receipt<S, C>) {
+      // const receipt = createReceipt(args);
+      set({ receipt, state: receipt.initialState, step: 0 });
+    },
+
+    next(execute: CommandExecutor<S, C>) {
+      set((state) => ({
+        state: execute(state.state, state.receipt.commands[state.step]),
+        step: state.step + 1,
+      }));
+    },
+    prev(coexecute: CommandExecutor<S, C>) {
+      set((state) => ({
+        state: coexecute(state.state, state.receipt.commands[state.step - 1]),
+        step: state.step - 1,
+      }));
+    },
   }));

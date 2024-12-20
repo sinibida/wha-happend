@@ -1,8 +1,8 @@
-import { CommandExecutor } from "./actions";
-import { createEnvironmentStore } from "./environmentStore";
-import { Receipt } from "./types";
+import { EnvironmentStore } from "./environmentStore";
+import { CommandExecutor, Receipt } from "./types";
 
-type Data<S, C> = {
+export type UseIndexerReturn<S, C> = {
+  // Data
   state: S;
   lastCommand?: C;
   step: number;
@@ -10,26 +10,24 @@ type Data<S, C> = {
    * Maximum(INCLUSIVE) value of `step`.
    */
   maxStep: number;
-};
 
-type Action<S, C> = {
+  // Actions
   goto(newStep: number): void;
   initialize: (receipt: Receipt<S, C>) => void;
 };
 
-export type UseIndexerReturn<S, C> = Data<S, C> & Action<S, C>;
-
-// TODO: rename to useIndexer
 /**
  * Indexer provides functions and selectors for the ui to use.
+ * @param environmentStore environment store object. (see `createEnvironmentStore`)
+ * @param execute          function that executes the command onto the state and returns it.
+ * @param coexecute        function that *reverts* the command onto the state and returns it.
  */
 export default function useIndexer<S, C>(
-  useEnvironmentStore: ReturnType<typeof createEnvironmentStore<S, C>>,
+  environmentStore: EnvironmentStore<S, C>,
   execute: CommandExecutor<S, C>,
   coexecute: CommandExecutor<S, C>
 ): UseIndexerReturn<S, C> {
-  const { state, receipt, step, initialize, next, prev } =
-    useEnvironmentStore();
+  const { state, receipt, step, initialize, next, prev } = environmentStore;
   const lastCommand = step === 0 ? undefined : receipt.commands[step - 1];
   const maxStep = receipt.commands.length;
   const goto = (newStep: number) => {

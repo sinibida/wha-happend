@@ -20,8 +20,9 @@ import { useEnvironmentStore } from "../model/store";
 import CellStateViewer from "./CellStateViewer";
 
 export default function BubbleSortPage() {
+  const environmentStore = useEnvironmentStore();
   const { lastCommand, state, step, maxStep, goto, initialize } = useIndexer(
-    useEnvironmentStore,
+    environmentStore,
     executeCommand,
     unexecuteCommand
   );
