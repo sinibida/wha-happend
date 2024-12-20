@@ -1,9 +1,9 @@
 import React from "react";
 import { Command } from "../model/command";
-import { State } from "../model/types";
 import { Theme } from "@emotion/react";
 import { SxProps, Box } from "@mui/material";
 import Cell from "./Cell";
+import { State } from "../model/store";
 
 export default function CellStateViewer({
   state,

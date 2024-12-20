@@ -2,6 +2,7 @@
 
 import OptionAccordion from "@/components/widget/common/OptionAccordion";
 import StepNavigator from "@/components/widget/common/StepNavigator";
+import useIndexer from "@/hooks/useIndexer";
 import {
   Box,
   Container,
@@ -12,32 +13,40 @@ import {
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
-import useIndexing from "../indexing/useIndexing";
+import { createReceipt } from "../lib/createReceipt";
+import executeCommand from "../lib/executeCommand";
+import unexecuteCommand from "../lib/unexecuteCommand";
+import { useEnvironmentStore } from "../model/store";
 import CellStateViewer from "./CellStateViewer";
 
 export default function BubbleSortPage() {
-  const { lastCommand, state, step, maxStep, goto, initialize } = useIndexing();
+  const environmentStore = useEnvironmentStore();
+  const { lastCommand, state, step, maxStep, goto, initialize } = useIndexer(
+    environmentStore,
+    executeCommand,
+    unexecuteCommand
+  );
   const t = useTranslations("view.BubbleSort");
 
   // TODO: Improve performance: editing arrayInput freezes the whole site for a moment.
   // TODO: Dragging & Zooming feature
   const [arrayInput, setArrayInput] = useState("1,10,3,4,2");
-  
+
   const onInitializeClick = () => {
-    initialize({
-      array: arrayInput
-        .split(",")
-        .map((x) => x.trim())
-        .map((x) => parseInt(x)),
-    });
+    initialize(
+      createReceipt(
+        arrayInput
+          .split(",")
+          .map((x) => x.trim())
+          .map((x) => parseInt(x))
+      )
+    );
   };
 
   const initializedRef = useRef(false);
   useEffect(() => {
     if (!initializedRef.current) {
-      initialize({
-        array: [1, 10, 3, 4, 2],
-      });
+      initialize(createReceipt([1, 10, 3, 4, 2]));
       initializedRef.current = true;
     }
   }, [initialize]);
