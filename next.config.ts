@@ -9,6 +9,8 @@ const withMDX = createMDX({
 });
 
 const nextConfig: NextConfig = {
+  // Configure pageExtensions to support MDX
+  pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
   /* config options here */
 };
 export default withNextIntl(withMDX(nextConfig));
