@@ -1,5 +1,5 @@
 import InsertionSortPage from "@/page/view/InsertionSort";
-import { loadMDX } from "@/shared/snippet/loadMDX";
+import loadMDX from "@/shared/snippet/loadMDX";
 import { Metadata } from "next";
 import { getLocale } from "next-intl/server";
 
@@ -10,5 +10,6 @@ export const metadata: Metadata = {
 export default async function Page() {
   const locale = await getLocale();
   const Manual = await loadMDX(locale, "view/insertion-sort");
-  return <InsertionSortPage manual={<Manual />} />;
+  const manual = Manual === undefined ? undefined : <Manual/>
+  return <InsertionSortPage manual={manual} />;
 }
