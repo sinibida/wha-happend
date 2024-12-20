@@ -2,6 +2,7 @@
 
 import OptionAccordion from "@/components/widget/common/OptionAccordion";
 import StepNavigator from "@/components/widget/common/StepNavigator";
+import useIndexer from "@/hooks/useIndexer";
 import {
   Box,
   Container,
@@ -12,8 +13,7 @@ import {
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
-import useIndexer from "../indexing/useIndexer";
-import createReceipt from "../lib/createReceipt";
+import { createReceipt } from "../lib/createReceipt";
 import executeCommand from "../lib/executeCommand";
 import unexecuteCommand from "../lib/unexecuteCommand";
 import { useEnvironmentStore } from "../model/store";
@@ -34,23 +34,19 @@ export default function BubbleSortPage() {
 
   const onInitializeClick = () => {
     initialize(
-      createReceipt({
-        array: arrayInput
+      createReceipt(
+        arrayInput
           .split(",")
           .map((x) => x.trim())
-          .map((x) => parseInt(x)),
-      })
+          .map((x) => parseInt(x))
+      )
     );
   };
 
   const initializedRef = useRef(false);
   useEffect(() => {
     if (!initializedRef.current) {
-      initialize(
-        createReceipt({
-          array: [1, 10, 3, 4, 2],
-        })
-      );
+      initialize(createReceipt([1, 10, 3, 4, 2]));
       initializedRef.current = true;
     }
   }, [initialize]);

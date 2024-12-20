@@ -1,8 +1,8 @@
 import { create } from "zustand";
-import { CommandExecutor, Receipt } from "./types";
+import { CommandExecutor, IndexerReceipt } from "./types";
 
 export type EnvironmentData<S, C> = {
-  receipt: Receipt<S, C>;
+  receipt: IndexerReceipt<S, C>;
   state: S;
   step: number;
 };
@@ -10,11 +10,16 @@ export type EnvironmentData<S, C> = {
 export type EnvironmentAction<S, C> = {
   next: (executeCommand: CommandExecutor<S, C>) => void;
   prev: (coexecuteCommand: CommandExecutor<S, C>) => void;
-  initialize: (receipt: Receipt<S, C>) => void;
+  initialize: (receipt: IndexerReceipt<S, C>) => void;
 };
 
 export type EnvironmentStore<S, C> = EnvironmentData<S, C> &
   EnvironmentAction<S, C>;
+
+export type CreateEnvironmentStoreArgs<S, C> = {
+  initialState: S;
+  commandType: C;
+};
 
 /**
  * 'Environment' contains ALL data that the indexer needs (except target step).
@@ -23,18 +28,33 @@ export type EnvironmentStore<S, C> = EnvironmentData<S, C> &
  * - calculated receipt
  * - current state
  * - current step
+ * 
+ * @example
+    const initialState: State = {
+      array: [],
+    };
+    
+    export const useEnvironmentStore = createEnvironmentStore({
+      initialState,
+      commandType: {} as Command,
+    });
  */
-export const createEnvironmentStore = <S, C>(
-  defaultData: EnvironmentData<S, C>
-) =>
+export const createEnvironmentStore = <S, C>({
+  initialState,
+}: CreateEnvironmentStoreArgs<S, C>) =>
   create<EnvironmentStore<S, C>>()((set) => ({
     // Data
 
-    ...defaultData,
+    receipt: {
+      initialState,
+      commands: [],
+    },
+    state: initialState,
+    step: 0,
 
     // Actions
 
-    initialize(receipt: Receipt<S, C>) {
+    initialize(receipt: IndexerReceipt<S, C>) {
       // const receipt = createReceipt(args);
       set({ receipt, state: receipt.initialState, step: 0 });
     },

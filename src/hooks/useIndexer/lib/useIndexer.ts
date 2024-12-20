@@ -1,5 +1,5 @@
 import { EnvironmentStore } from "./environmentStore";
-import { CommandExecutor, Receipt } from "./types";
+import { CommandExecutor, IndexerReceipt } from "./types";
 
 export type UseIndexerReturn<S, C> = {
   // Data
@@ -13,7 +13,7 @@ export type UseIndexerReturn<S, C> = {
 
   // Actions
   goto(newStep: number): void;
-  initialize: (receipt: Receipt<S, C>) => void;
+  initialize: (receipt: IndexerReceipt<S, C>) => void;
 };
 
 /**

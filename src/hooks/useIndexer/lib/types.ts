@@ -1,4 +1,4 @@
-export type Receipt<S, C> = {
+export type IndexerReceipt<S, C> = {
   initialState: S;
   commands: C[];
 };

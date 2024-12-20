@@ -1,6 +1,6 @@
 import { produce } from "immer";
-import { State } from "../model/types";
 import { Command } from "../model/command";
+import { State } from "../model/store";
 
 export default function unexecuteCommand(
   state: State,
