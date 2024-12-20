@@ -17,6 +17,7 @@ import { createReceipt } from "../lib/createReceipt";
 import { executeCommand, unexecuteCommand } from "../lib/execute";
 import { useEnvironmentStore } from "../model/store";
 import CellStateViewer from "./CellStateViewer";
+import MDXManualRenderer from "@/components/wrapper/MDXManualRenderer";
 
 export default function BubbleSortPage({
   manual,
@@ -87,9 +88,7 @@ export default function BubbleSortPage({
       <Divider sx={{ mt: 4, mb: 4 }} />
 
       <Box sx={{ gap: 1, p: 2 }}>
-        <Typography variant="h3">Bubble Sort</Typography>
-        <Typography variant="body1">It&apos;s good.</Typography>
-        {manual}
+        <MDXManualRenderer>{manual}</MDXManualRenderer>
       </Box>
     </Container>
   );
