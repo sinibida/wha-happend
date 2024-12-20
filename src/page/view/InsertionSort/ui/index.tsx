@@ -2,6 +2,7 @@
 
 import OptionAccordion from "@/components/widget/common/OptionAccordion";
 import StepNavigator from "@/components/widget/common/StepNavigator";
+import MDXManualRenderer from "@/components/wrapper/MDXManualRenderer";
 import useIndexer from "@/hooks/useIndexer";
 import {
   Box,
@@ -18,7 +19,11 @@ import { executeCommand, unexecuteCommand } from "../lib/execute";
 import { useEnvironmentStore } from "../model/store";
 import CellStateViewer from "./CellStateViewer";
 
-export default function InsertionSortPage() {
+export default function InsertionSortPage({
+  manual,
+}: {
+  manual: React.ReactNode;
+}) {
   const environmentStore = useEnvironmentStore();
   const { lastCommand, state, step, maxStep, goto, initialize } = useIndexer(
     environmentStore,
@@ -83,8 +88,7 @@ export default function InsertionSortPage() {
       <Divider sx={{ mt: 4, mb: 4 }} />
 
       <Box sx={{ gap: 1, p: 2 }}>
-        <Typography variant="h3">Bubble Sort</Typography>
-        <Typography variant="body1">It&apos;s good.</Typography>
+        <MDXManualRenderer>{manual}</MDXManualRenderer>
       </Box>
     </Container>
   );
