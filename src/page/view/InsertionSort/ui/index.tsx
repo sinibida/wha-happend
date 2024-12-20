@@ -15,14 +15,14 @@ import { useEffect, useRef, useState } from "react";
 import useIndexing from "../indexing/useIndexing";
 import CellStateViewer from "./CellStateViewer";
 
-export default function BubbleSortPage() {
+export default function InsertionSortPage() {
   const { lastCommand, state, step, maxStep, goto, initialize } = useIndexing();
-  const t = useTranslations("view.BubbleSort");
+  const t = useTranslations("view.InsertionSort");
 
   // TODO: Improve performance: editing arrayInput freezes the whole site for a moment.
   // TODO: Dragging & Zooming feature
   const [arrayInput, setArrayInput] = useState("1,10,3,4,2");
-  
+
   const onInitializeClick = () => {
     initialize({
       array: arrayInput
@@ -71,12 +71,11 @@ export default function BubbleSortPage() {
         {/* Step Navigator */}
         <StepNavigator maxStep={maxStep} onGoto={(x) => goto(x)} step={step} />
       </Box>
-
       <Divider sx={{ mt: 4, mb: 4 }} />
 
       <Box sx={{ gap: 1, p: 2 }}>
-        <Typography variant="h3">Bubble Sort</Typography>
-        <Typography variant="body1">It&apos;s good.</Typography>
+        <Typography variant="h3">Insertion Sort</Typography>
+        <Typography variant="body1">It&apos;s also good.</Typography>
       </Box>
     </Container>
   );
