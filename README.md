@@ -1,6 +1,6 @@
 <!-- TODO: 로고 만들기 -->
 
-<center><h3>Wha Happend? - 머선 일이고?</h3></center>
+<center><h3>Swap</h3></center>
 
 데이터 모델과 알고리즘을 눈으로 보고 배우자!
 
