@@ -20,6 +20,9 @@ import BlockArrayViewer from "@/components/organism/viewer/BlockArrayViewer";
 import MDXManualRenderer from "@/components/wrapper/MDXManualRenderer";
 import Canvas from "@/components/organism/Canvas";
 
+// TODO: Refactor `manual` to `statics` for each page.
+// (Param명을 모든 페이지 상에서 통일시키기 위해)
+// type BubbleSortPageStatics = {}
 export default function BubbleSortPage({
   manual,
 }: {
