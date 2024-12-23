@@ -8,8 +8,9 @@
     "sort_insertion-sort": "삽입 정렬"
   },
   "_index": {
-    "title": "Swap",
-    "description": "다양한 알고리즘을 시각적으로 배우기!"
+    "title": "Swap.",
+    "description": "다양한 알고리즘을 시각적으로 배우기!",
+    "use-ctrl-f": "(검색 기능 (Ctrl/⌘+f)로 원하는 내용을 찾아보세요!)"
   },
   "view": {
     "_common": {
