@@ -3,7 +3,7 @@ import { SwapHoriz } from "@mui/icons-material";
 import { AppBar, Box, Toolbar, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 
-export default function SwapAppBar() {
+export default function FAppBar() {
   const t = useTranslations("_common");
   return (
     <AppBar position="relative">

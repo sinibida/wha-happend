@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import React from "react";
 import Footer from "./Footer";
-import SwapAppBar from "./SwapAppBar";
+import FAppBar from "./SwapAppBar";
 
 export default function HomeLayout({
   children,
@@ -11,7 +11,7 @@ export default function HomeLayout({
   return (
     <Box sx={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
       {/* LATER: Slide Animation */}
-      <SwapAppBar />
+      <FAppBar />
       {children}
       <Box sx={{ flex: 1 }} />
       <Footer />
