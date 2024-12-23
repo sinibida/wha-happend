@@ -7,7 +7,7 @@ export default function HomeLayout({
 }: {
   children?: React.ReactNode;
 }) {
-  const t = useTranslations("Common");
+  const t = useTranslations("_common");
   return (
     <Box>
       {/* LATER: Slide Animation */}

@@ -31,7 +31,7 @@ export default function InsertionSortPage({
     executeCommand,
     unexecuteCommand
   );
-  const t = useTranslations("view.InsertionSort");
+  const t = useTranslations("view.insertion-sort");
 
   // TODO: Improve performance: editing arrayInput freezes the whole site for a moment.
   const [arrayInput, setArrayInput] = useState("1,10,3,4,2");

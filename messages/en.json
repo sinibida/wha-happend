@@ -1,15 +1,27 @@
 {
-  "Common": {
-    "title": "Wha Happend?"
+  "_common": {
+    "title": "Swap"
+  },
+  "_navigation": {
+    "sort": "정렬 알고리즘",
+    "sort_bubble-sort": "버블 정렬",
+    "sort_insertion-sort": "삽입 정렬"
+  },
+  "_index": {
+    "title": "Swap",
+    "description": "다양한 알고리즘을 시각적으로 배우기!"
   },
   "view": {
-    "common": {
+    "_common": {
       "option": "Options",
       "step_info": "Step: {step, number}/{maxStep, number}",
       "apply": "Apply"
     },
-    "BubbleSort": {
+    "bubble-sort": {
       "title": "Bubble Sort"
+    },
+    "insertion-sort": {
+      "title": "Insertion Sort"
     }
   }
 }

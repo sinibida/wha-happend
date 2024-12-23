@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl";
 import React from "react";
 
 export default function ApplyButton({ onClick }: { onClick: () => void }) {
-  const t = useTranslations("view.common");
+  const t = useTranslations("view._common");
   
   return (
     <Box sx={{ display: "flex", justifyContent: "flex-end" }}>

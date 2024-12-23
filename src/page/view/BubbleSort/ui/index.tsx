@@ -34,7 +34,7 @@ export default function BubbleSortPage({
     executeCommand,
     unexecuteCommand
   );
-  const t = useTranslations("view.BubbleSort");
+  const t = useTranslations("view.bubble-sort");
 
   // TODO: Improve performance: editing arrayInput freezes the whole site for a moment.
   const [arrayInput, setArrayInput] = useState("1,10,3,4,2");

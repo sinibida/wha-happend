@@ -29,7 +29,7 @@ export default function StepNavigator({
   maxStep,
   onGoto,
 }: StepNavigatorProps) {
-  const t = useTranslations("view.common");
+  const t = useTranslations("view._common");
   const getNavigateButtonProps = (delta: number) => ({
     onClick: () => onGoto(step + delta),
     disabled: !(step + delta >= 0 && step + delta <= maxStep),

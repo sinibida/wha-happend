@@ -26,7 +26,7 @@ export default function OptionAccordion({
 }: {
   children?: React.ReactNode;
 }) {
-  const t = useTranslations("view.common");
+  const t = useTranslations("view._common");
   return (
     <Box>
       <Accordion variant="outlined">
