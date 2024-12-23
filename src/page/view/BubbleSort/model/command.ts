@@ -1,25 +1,4 @@
-export type Command = SwapCommand | CompareCommand | DoneCommand;
+import { ArrayCommand } from "@/entity/adapter/ArrayAdapter";
+import { BaseCommand } from "@/entity/adapter/CommonAdapter";
 
-export type SwapCommand = {
-  type: "swap";
-  message: string;
-  payload: {
-    indexA: number;
-    indexB: number;
-  };
-};
-
-export type CompareCommand = {
-  type: "compare";
-  message: string;
-  payload: {
-    indexA: number;
-    indexB: number;
-  };
-};
-
-export type DoneCommand = {
-  type: "done";
-  message: string;
-  payload: object;
-};
+export type Command = BaseCommand | ArrayCommand;

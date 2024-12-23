@@ -1,0 +1,103 @@
+"use client";
+
+import Canvas from "@/components/organism/Canvas";
+import BlockArrayViewer from "@/components/organism/viewer/BlockArrayViewer";
+import OptionAccordion from "@/components/widget/common/OptionAccordion";
+import StepNavigator from "@/components/widget/common/StepNavigator";
+import MDXManualRenderer from "@/components/wrapper/MDXManualRenderer";
+import useIndexer from "@/hooks/useIndexer";
+import {
+  Box,
+  Container,
+  Divider,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { useTranslations } from "next-intl";
+import { useEffect, useRef, useState } from "react";
+import { createReceipt } from "../lib/createReceipt";
+import { executeCommand, unexecuteCommand } from "../lib/execute";
+import { useEnvironmentStore } from "../model/store";
+
+export default function InsertionSortPage({
+  manual,
+}: {
+  manual: React.ReactNode;
+}) {
+  const environmentStore = useEnvironmentStore();
+  const { lastCommand, state, step, maxStep, goto, initialize } = useIndexer(
+    environmentStore,
+    executeCommand,
+    unexecuteCommand
+  );
+  const t = useTranslations("view.insertion-sort");
+
+  // TODO: Improve performance: editing arrayInput freezes the whole site for a moment.
+  const [arrayInput, setArrayInput] = useState("1,10,3,4,2");
+
+  const onInitializeClick = () => {
+    initialize(
+      createReceipt(
+        arrayInput
+          .split(",")
+          .map((x) => x.trim())
+          .map((x) => parseInt(x))
+      )
+    );
+  };
+
+  const initializedRef = useRef(false);
+  useEffect(() => {
+    if (!initializedRef.current) {
+      initialize(createReceipt([1, 10, 3, 4, 2]));
+      initializedRef.current = true;
+    }
+  }, [initialize]);
+
+  return (
+    <Container maxWidth="lg">
+      <Typography variant="h3">{t("title")}</Typography>
+
+      {/* Player */}
+      <Box sx={{ display: "flex", flexDirection: "column" }}>
+        <Box sx={{ mb: 2 }}>
+          {/* State Viewer */}
+          <Paper variant="outlined" sx={{ p: 2, mb: 1 }}>
+            <Box sx={{ height: 256 }}>
+              <Canvas>
+                <Canvas.Cell data={{ id: `0`, x: 0, y: 0 }}>
+                  <BlockArrayViewer
+                    array={state.array}
+                    lastCommand={lastCommand}
+                  />
+                </Canvas.Cell>
+              </Canvas>
+            </Box>
+            <Divider sx={{ mt: 2, mb: 2 }} />
+            <Typography>{lastCommand?.message ?? "(Initial)"}</Typography>
+          </Paper>
+
+          <OptionAccordion>
+            <TextField
+              label="Array"
+              placeholder="1,2,3,4,5"
+              value={arrayInput}
+              onChange={(e) => setArrayInput(e.target.value)}
+            />
+            <OptionAccordion.ApplyButton onClick={onInitializeClick} />
+          </OptionAccordion>
+        </Box>
+
+        {/* Step Navigator */}
+        <StepNavigator maxStep={maxStep} onGoto={(x) => goto(x)} step={step} />
+      </Box>
+
+      <Divider sx={{ mt: 4, mb: 4 }} />
+
+      <Box sx={{ gap: 1, p: 2 }}>
+        <MDXManualRenderer>{manual}</MDXManualRenderer>
+      </Box>
+    </Container>
+  );
+}

@@ -1,0 +1,14 @@
+@keyframes swap-blink {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.5;
+  }
+}
+
+.container {
+  &[data-last-command="swap"] {
+    animation: swap-blink 100ms ease-in-out 0ms 4 alternate;
+  }
+}

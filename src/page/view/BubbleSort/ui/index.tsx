@@ -1,61 +1,66 @@
 "use client";
 
+import OptionAccordion from "@/components/widget/common/OptionAccordion";
+import StepNavigator from "@/components/widget/common/StepNavigator";
+import useIndexer from "@/hooks/useIndexer";
 import {
-  ExpandMore,
-  KeyboardArrowLeft,
-  KeyboardArrowRight,
-  KeyboardDoubleArrowLeft,
-  KeyboardDoubleArrowRight,
-} from "@mui/icons-material";
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
   Box,
-  Button,
   Container,
   Divider,
   Paper,
   TextField,
   Typography,
 } from "@mui/material";
+import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
-import useIndexing from "../indexing/useIndexing";
-import CellStateViewer from "./CellStateViewer";
+import { createReceipt } from "../lib/createReceipt";
+import { executeCommand, unexecuteCommand } from "../lib/execute";
+import { useEnvironmentStore } from "../model/store";
+import BlockArrayViewer from "@/components/organism/viewer/BlockArrayViewer";
+import MDXManualRenderer from "@/components/wrapper/MDXManualRenderer";
+import Canvas from "@/components/organism/Canvas";
 
-export default function BubbleSortPage() {
-  const { lastCommand, state, step, maxStep, goto, initialize } = useIndexing();
+// TODO: Refactor `manual` to `statics` for each page.
+// (Param명을 모든 페이지 상에서 통일시키기 위해)
+// type BubbleSortPageStatics = {}
+export default function BubbleSortPage({
+  manual,
+}: {
+  manual?: React.ReactNode;
+}) {
+  const environmentStore = useEnvironmentStore();
+  const { lastCommand, state, step, maxStep, goto, initialize } = useIndexer(
+    environmentStore,
+    executeCommand,
+    unexecuteCommand
+  );
+  const t = useTranslations("view.bubble-sort");
 
   // TODO: Improve performance: editing arrayInput freezes the whole site for a moment.
-  // TODO: Dragging & Zooming feature
   const [arrayInput, setArrayInput] = useState("1,10,3,4,2");
 
-  const getNavigateButtonProps = (delta: number) => ({
-    onClick: () => goto(step + delta),
-    disabled: !(step + delta >= 0 && step + delta <= maxStep),
-  });
   const onInitializeClick = () => {
-    initialize({
-      array: arrayInput
-        .split(",")
-        .map((x) => x.trim())
-        .map((x) => parseInt(x)),
-    });
+    initialize(
+      createReceipt(
+        arrayInput
+          .split(",")
+          .map((x) => x.trim())
+          .map((x) => parseInt(x))
+      )
+    );
   };
 
   const initializedRef = useRef(false);
   useEffect(() => {
     if (!initializedRef.current) {
-      initialize({
-        array: [1, 10, 3, 4, 2],
-      });
+      initialize(createReceipt([1, 10, 3, 4, 2]));
       initializedRef.current = true;
     }
   }, [initialize]);
 
   return (
     <Container maxWidth="lg">
-      <Typography variant="h3">Bubble Sort</Typography>
+      <Typography variant="h3">{t("title")}</Typography>
 
       {/* Player */}
       <Box sx={{ display: "flex", flexDirection: "column" }}>
@@ -63,84 +68,39 @@ export default function BubbleSortPage() {
           {/* State Viewer */}
           <Paper variant="outlined" sx={{ p: 2, mb: 1 }}>
             {/* LATER: create BarStateViewer */}
-            <CellStateViewer state={state} lastCommand={lastCommand} />
+            <Box sx={{ height: 256 }}>
+              <Canvas>
+                <Canvas.Cell data={{ id: `0`, x: 0, y: 0 }}>
+                  <BlockArrayViewer
+                    array={state.array}
+                    lastCommand={lastCommand}
+                  />
+                </Canvas.Cell>
+              </Canvas>
+            </Box>
             <Divider sx={{ mt: 2, mb: 2 }} />
             <Typography>{lastCommand?.message ?? "(Initial)"}</Typography>
           </Paper>
           {/* Option Accordion */}
-          <Box>
-            <Accordion variant="outlined">
-              <AccordionSummary expandIcon={<ExpandMore />}>
-                Options
-              </AccordionSummary>
-              <AccordionDetails>
-                <TextField
-                  label="Array"
-                  placeholder="1,2,3,4,5"
-                  value={arrayInput}
-                  onChange={(e) => setArrayInput(e.target.value)}
-                />
-                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-                  <Button variant="contained" onClick={onInitializeClick}>
-                    Initialize
-                  </Button>
-                </Box>
-              </AccordionDetails>
-            </Accordion>
-          </Box>
+          <OptionAccordion>
+            <TextField
+              label="Array"
+              placeholder="1,2,3,4,5"
+              value={arrayInput}
+              onChange={(e) => setArrayInput(e.target.value)}
+            />
+            <OptionAccordion.ApplyButton onClick={onInitializeClick} />
+          </OptionAccordion>
         </Box>
 
         {/* Step Navigator */}
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            alignSelf: "center",
-            flexDirection: "column",
-            gap: 1,
-          }}
-        >
-          <Box sx={{ gap: 2, display: "flex" }}>
-            <Button
-              title="-10 step"
-              variant="outlined"
-              {...getNavigateButtonProps(-10)}
-            >
-              <KeyboardDoubleArrowLeft />
-            </Button>
-            <Button
-              title="-1 step"
-              variant="contained"
-              {...getNavigateButtonProps(-1)}
-            >
-              <KeyboardArrowLeft />
-            </Button>
-            <Button
-              title="+1 step"
-              variant="contained"
-              {...getNavigateButtonProps(1)}
-            >
-              <KeyboardArrowRight />
-            </Button>
-            <Button
-              title="+10 step"
-              variant="outlined"
-              {...getNavigateButtonProps(10)}
-            >
-              <KeyboardDoubleArrowRight />
-            </Button>
-          </Box>
-          <Typography variant="subtitle2" sx={{ color: "text.secondary" }}>
-            step: {step}/{maxStep}
-          </Typography>
-        </Box>
+        <StepNavigator maxStep={maxStep} onGoto={(x) => goto(x)} step={step} />
       </Box>
 
       <Divider sx={{ mt: 4, mb: 4 }} />
 
       <Box sx={{ gap: 1, p: 2 }}>
-        <Typography variant="h3">Bubble Sort</Typography>
-        <Typography variant="body1">It&apos;s good.</Typography>
+        <MDXManualRenderer>{manual}</MDXManualRenderer>
       </Box>
     </Container>
   );
