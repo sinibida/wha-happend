@@ -16,8 +16,9 @@ import { useEffect, useRef, useState } from "react";
 import { createReceipt } from "../lib/createReceipt";
 import { executeCommand, unexecuteCommand } from "../lib/execute";
 import { useEnvironmentStore } from "../model/store";
-import CellStateViewer from "./CellStateViewer";
+import BlockArrayViewer from "@/components/organism/viewer/BlockArrayViewer";
 import MDXManualRenderer from "@/components/wrapper/MDXManualRenderer";
+import Canvas from "@/components/organism/Canvas";
 
 export default function BubbleSortPage({
   manual,
@@ -33,7 +34,6 @@ export default function BubbleSortPage({
   const t = useTranslations("view.BubbleSort");
 
   // TODO: Improve performance: editing arrayInput freezes the whole site for a moment.
-  // TODO: Dragging & Zooming feature
   const [arrayInput, setArrayInput] = useState("1,10,3,4,2");
 
   const onInitializeClick = () => {
@@ -65,7 +65,16 @@ export default function BubbleSortPage({
           {/* State Viewer */}
           <Paper variant="outlined" sx={{ p: 2, mb: 1 }}>
             {/* LATER: create BarStateViewer */}
-            <CellStateViewer state={state} lastCommand={lastCommand} />
+            <Box sx={{ height: 256 }}>
+              <Canvas>
+                <Canvas.Cell data={{ id: `0`, x: 0, y: 0 }}>
+                  <BlockArrayViewer
+                    array={state.array}
+                    lastCommand={lastCommand}
+                  />
+                </Canvas.Cell>
+              </Canvas>
+            </Box>
             <Divider sx={{ mt: 2, mb: 2 }} />
             <Typography>{lastCommand?.message ?? "(Initial)"}</Typography>
           </Paper>
