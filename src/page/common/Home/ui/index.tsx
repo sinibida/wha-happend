@@ -4,6 +4,9 @@ import { useTranslations } from "next-intl";
 import HomeMOC from "./HomeMOC";
 import { SwapHoriz } from "@mui/icons-material";
 
+// TODO: Fix Mobile layout
+// - description overflown
+// - weird gap between logo & content
 export default function HomePage() {
   const t = useTranslations(`${tpath.index}`);
 

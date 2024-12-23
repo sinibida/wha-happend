@@ -9,3 +9,5 @@
 
 - Front-end: [React.js](https://react.dev/)
 - Back-end: [Next.js](https://nextjs.org/)
+
+- +) 실행 환경 구축: [Just](https://just.systems/man/en/)
