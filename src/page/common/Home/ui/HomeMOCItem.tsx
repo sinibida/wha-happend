@@ -1,4 +1,4 @@
-import LinkText from "@/components/atomic/LinkText";
+import FLink from "@/components/atomic/LinkText";
 import { NavigationItem } from "@/shared/constant/navigation";
 import tpath from "@/shared/constant/tpath";
 import { useTranslations } from "next-intl";
@@ -14,7 +14,7 @@ export default function HomeMOCItem({ item }: { item: NavigationItem }) {
 
   const content =
     item.href !== undefined ? (
-      <LinkText href={item.href}>{text}</LinkText>
+      <FLink href={item.href}>{text}</FLink>
     ) : (
       text
     );

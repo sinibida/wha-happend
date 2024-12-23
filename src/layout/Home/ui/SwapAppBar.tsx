@@ -1,4 +1,4 @@
-import LinkText from "@/components/atomic/LinkText";
+import FLink from "@/components/atomic/LinkText";
 import { SwapHoriz } from "@mui/icons-material";
 import { AppBar, Box, Toolbar, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -8,7 +8,7 @@ export default function SwapAppBar() {
   return (
     <AppBar position="relative">
       <Toolbar>
-        <LinkText href="/" component="div">
+        <FLink href="/" component="div">
           <Box
             sx={{
               display: "flex",
@@ -19,7 +19,7 @@ export default function SwapAppBar() {
             <SwapHoriz sx={{ width: 32, height: 32 }} />
             <Typography variant="h6">{t("title")}</Typography>
           </Box>
-        </LinkText>
+        </FLink>
       </Toolbar>
     </AppBar>
   );
