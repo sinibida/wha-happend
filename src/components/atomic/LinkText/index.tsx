@@ -3,11 +3,12 @@ import { Link as MuiLink } from "@mui/material";
 import React from "react";
 
 export type LinkTextProps = {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   href: string;
 };
 
 // LATER: will need support more arguments
+// TODO: Rename LinkText -> LinkContent
 export default function LinkText({ children, href }: LinkTextProps) {
   return (
     <MuiLink component='span'>

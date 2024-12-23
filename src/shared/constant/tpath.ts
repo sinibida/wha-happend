@@ -8,9 +8,10 @@
  * t(`${tpath.viewPage}.BubbleSort`)
  */
 const tpath = {
-  page: 'page.',
-  metadata: 'metadata.',
-  viewPage: 'page.view',
-}
+  index: '_index',
+  navigation: '_navigation'
+} as const
+
+// TODO: use tpath on existing pages
 
 export default tpath;

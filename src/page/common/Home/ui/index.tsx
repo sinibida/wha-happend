@@ -1,18 +1,20 @@
-import LinkText from "@/components/atomic/LinkText";
-import { Box, List, ListItem } from "@mui/material";
-import React from "react";
+import tpath from "@/shared/constant/tpath";
+import { Box, Container, Typography } from "@mui/material";
+import { useTranslations } from "next-intl";
+import HomeMOC from "./HomeMOC";
 
 export default function HomePage() {
+  const t = useTranslations(`${tpath.index}`);
+
   return (
-    <Box>
-      <List>
-        <ListItem>
-          <LinkText href={"/view/bubble-sort"}>Bubble Sort</LinkText>
-        </ListItem>
-        <ListItem>
-          <LinkText href={"/view/insertion-sort"}>Insertion Sort</LinkText>
-        </ListItem>
-      </List>
-    </Box>
+    <Container maxWidth="md">
+      <Box>
+        <Typography>{t("title")}</Typography>
+        <Typography>{t("description")}</Typography>
+      </Box>
+      <Box>
+        <HomeMOC />
+      </Box>
+    </Container>
   );
 }
