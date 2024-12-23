@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 import type { MDXComponents } from "mdx/types";
-import LinkText from "./components/atomic/LinkText";
+import FLink from "./components/atomic/LinkText";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -11,6 +11,6 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     h4: ({ children }) => <Typography variant="h4">{children}</Typography>,
     h5: ({ children }) => <Typography variant="h5">{children}</Typography>,
     h6: ({ children }) => <Typography variant="h6">{children}</Typography>,
-    a: ({ children, ...props }) => <LinkText {...props}>{children}</LinkText>,
+    a: ({ children, ...props }) => <FLink {...props}>{children}</FLink>,
   };
 }

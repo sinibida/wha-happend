@@ -20,6 +20,9 @@ import BlockArrayViewer from "@/components/organism/viewer/BlockArrayViewer";
 import MDXManualRenderer from "@/components/wrapper/MDXManualRenderer";
 import Canvas from "@/components/organism/Canvas";
 
+// TODO: Refactor `manual` to `statics` for each page.
+// (Param명을 모든 페이지 상에서 통일시키기 위해)
+// type BubbleSortPageStatics = {}
 export default function BubbleSortPage({
   manual,
 }: {
@@ -31,7 +34,7 @@ export default function BubbleSortPage({
     executeCommand,
     unexecuteCommand
   );
-  const t = useTranslations("view.BubbleSort");
+  const t = useTranslations("view.bubble-sort");
 
   // TODO: Improve performance: editing arrayInput freezes the whole site for a moment.
   const [arrayInput, setArrayInput] = useState("1,10,3,4,2");
