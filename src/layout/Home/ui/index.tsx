@@ -1,29 +1,20 @@
-import LinkText from "@/components/atomic/LinkText";
-import { SwapHoriz } from "@mui/icons-material";
-import { AppBar, Box, Toolbar, Typography } from "@mui/material";
-import { useTranslations } from "next-intl";
+import { Box } from "@mui/material";
 import React from "react";
+import Footer from "./Footer";
+import SwapAppBar from "./SwapAppBar";
 
 export default function HomeLayout({
   children,
 }: {
   children?: React.ReactNode;
 }) {
-  const t = useTranslations("_common");
   return (
-    <Box>
+    <Box sx={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
       {/* LATER: Slide Animation */}
-      <AppBar position="relative">
-        <Toolbar>
-          <LinkText href="/" component="div">
-            <Box sx={{ display: "flex", alignItems: 'center', color: "primary.contrastText" }}>
-              <SwapHoriz sx={{ width: 32, height: 32 }} />
-              <Typography variant="h6">{t("title")}</Typography>
-            </Box>
-          </LinkText>
-        </Toolbar>
-      </AppBar>
+      <SwapAppBar />
       {children}
+      <Box sx={{ flex: 1 }} />
+      <Footer />
     </Box>
   );
 }
