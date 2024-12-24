@@ -39,6 +39,7 @@ export default function BlockCanvasCell({
   const style: React.CSSProperties = {
     left: x,
     top: y,
+    transition: "left 250ms, top 250ms",
     position: "absolute",
   };
 
@@ -49,7 +50,11 @@ export default function BlockCanvasCell({
     : undefined;
 
   return (
-    <div className={styles.container} data-last-command={lastCommandData} style={style}>
+    <div
+      className={styles.container}
+      data-last-command={lastCommandData}
+      style={style}
+    >
       <Block sx={sx} elevation={elevation} idx={index}>
         {value}
       </Block>
