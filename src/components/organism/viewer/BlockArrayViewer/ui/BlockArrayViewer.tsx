@@ -2,10 +2,10 @@ import { ArrayCommand } from "@/entity/adapter/ArrayAdapter";
 import { BaseCommand } from "@/entity/adapter/CommonAdapter";
 import { Box } from "@mui/material";
 import BlockCanvasCell from "./BlockCell";
-import { DataCell } from "@/entity/DataCell";
+import { ArrayCell } from "@/entity/cell/ArrayCell";
 
 export type BlockArrayViewerProps = {
-  array: DataCell<number>[];
+  array: ArrayCell<number>[];
   lastCommand?: ArrayCommand | BaseCommand;
 
   // Layout

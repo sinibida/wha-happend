@@ -1,12 +1,12 @@
 import { createEnvironmentStore } from "@/hooks/useIndexer";
 import { Command } from "./command";
-import { DataCell } from "@/entity/DataCell";
+import { ArrayCell } from "@/entity/cell/ArrayCell";
 
 /**
  * The state that gets changed by algorithm.
  */
 export type State = {
-  array: DataCell<number>[];
+  array: ArrayCell<number>[];
   // LATER: add i & j here
 };
 
