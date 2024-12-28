@@ -1,4 +1,3 @@
-import { ArrayCommand } from "@/entity/adapter/ArrayAdapter";
-import { BaseCommand } from "@/entity/adapter/CommonAdapter";
+import { ArrayCellExecutorCommand } from "@/entity/executor/ArrayCellExecutor";
 
-export type Command = BaseCommand | ArrayCommand;
+export type Command = ArrayCellExecutorCommand;

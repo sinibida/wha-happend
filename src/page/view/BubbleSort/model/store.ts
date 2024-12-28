@@ -1,17 +1,22 @@
+import {
+  ArrayCellExecutorState,
+  newArrayCellExecutorState,
+} from "@/entity/executor/ArrayCellExecutor";
 import { createEnvironmentStore } from "@/hooks/useIndexer";
 import { Command } from "./command";
-import { ArrayCell } from "@/entity/cell/ArrayCell";
 
 /**
  * The state that gets changed by algorithm.
  */
-export type State = {
-  array: ArrayCell<number>[];
-  // LATER: add i & j here
+export type State = ArrayCellExecutorState & {
+  // i: number;
+  // j: number;
 };
 
 const initialState: State = {
-  array: [],
+  ...newArrayCellExecutorState(),
+  // i: 0,
+  // j: 0,
 };
 
 export const useEnvironmentStore = createEnvironmentStore({

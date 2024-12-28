@@ -10,13 +10,11 @@ function swap(state: State, a: number, b: number) {
     const temp = aObj.index;
     aObj.index = bObj.index;
     bObj.index = temp;
-    draft.array.sort(x => x.index);
+    draft.array.sort((x) => x.index);
   })(state);
 }
 
-// LEFTOFF refactor this
-// STUB: need refactoring
-export function executeCommand(state: State, command: Command): State {
+function executeCommand(state: State, command: Command): State {
   switch (command.type) {
     case "swap": {
       const { indexA: a, indexB: b } = command.payload;
@@ -30,7 +28,7 @@ export function executeCommand(state: State, command: Command): State {
   }
 }
 
-export function unexecuteCommand(state: State, command: Command): State {
+function unexecuteCommand(state: State, command: Command): State {
   switch (command.type) {
     case "swap": {
       const { indexA: a, indexB: b } = command.payload;
@@ -43,3 +41,10 @@ export function unexecuteCommand(state: State, command: Command): State {
       throw new Error("Unimplented");
   }
 }
+
+const arrayCellExecutor = {
+  executeCommand,
+  unexecuteCommand,
+};
+
+export default arrayCellExecutor;
