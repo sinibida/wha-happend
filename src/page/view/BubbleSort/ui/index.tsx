@@ -1,8 +1,10 @@
 "use client";
 
+import Canvas from "@/components/organism/Canvas";
+import BlockArrayViewer from "@/components/organism/viewer/BlockArrayViewer";
 import OptionAccordion from "@/components/widget/common/OptionAccordion";
 import StepNavigator from "@/components/widget/common/StepNavigator";
-import useIndexer from "@/hooks/useIndexer";
+import MDXManualRenderer from "@/components/wrapper/MDXManualRenderer";
 import {
   Box,
   Container,
@@ -13,12 +15,7 @@ import {
 } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
-import { createReceipt } from "../lib/createReceipt";
-import { executeCommand, unexecuteCommand } from "../lib/execute";
-import { useEnvironmentStore } from "../model/store";
-import BlockArrayViewer from "@/components/organism/viewer/BlockArrayViewer";
-import MDXManualRenderer from "@/components/wrapper/MDXManualRenderer";
-import Canvas from "@/components/organism/Canvas";
+import useBubbleSort from "../lib/useBubbleSort";
 
 // TODO: Refactor `manual` to `statics` for each page.
 // (Param명을 모든 페이지 상에서 통일시키기 위해)
@@ -28,35 +25,29 @@ export default function BubbleSortPage({
 }: {
   manual?: React.ReactNode;
 }) {
-  const environmentStore = useEnvironmentStore();
-  const { lastCommand, state, step, maxStep, goto, initialize } = useIndexer(
-    environmentStore,
-    executeCommand,
-    unexecuteCommand
-  );
+  const { lastCommand, state, step, maxStep, goto, initializeWith } =
+    useBubbleSort();
   const t = useTranslations("view.bubble-sort");
 
   // TODO: Improve performance: editing arrayInput freezes the whole site for a moment.
   const [arrayInput, setArrayInput] = useState("1,10,3,4,2");
 
   const onInitializeClick = () => {
-    initialize(
-      createReceipt(
-        arrayInput
-          .split(",")
-          .map((x) => x.trim())
-          .map((x) => parseInt(x))
-      )
+    initializeWith(
+      arrayInput
+        .split(",")
+        .map((x) => x.trim())
+        .map((x) => parseInt(x))
     );
   };
 
   const initializedRef = useRef(false);
   useEffect(() => {
     if (!initializedRef.current) {
-      initialize(createReceipt([1, 10, 3, 4, 2]));
+      initializeWith([1, 10, 3, 4, 2]);
       initializedRef.current = true;
     }
-  }, [initialize]);
+  }, [initializeWith]);
 
   return (
     <Container maxWidth="lg">
